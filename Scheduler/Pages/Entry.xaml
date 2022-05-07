@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="Scheduler.Pages.Entry"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Scheduler.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wpfui="clr-namespace:WPFUI.Controls;assembly=WPFUI"
+    Title="Entry"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid>
+        <wpfui:TextBox x:Name="TextBoxLogin"
+            Width="350"
+            Height="34"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Placeholder="Логин" Margin="0,-135,0,0" />
+        <wpfui:PasswordBox x:Name="PasswordBoxPass"
+            Width="350"
+            Height="35"
+            Margin="0,-35,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Placeholder="Пароль" />
+        <wpfui:Button x:Name="ButtonReg"
+            Width="165"
+            Height="35"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Appearance="Secondary"
+            Content="Зарегистрироваться" Margin="-185,65,0,0" />
+        <wpfui:Button x:Name="ButtonEntry"
+            Width="150"
+            Height="35"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Appearance="Primary"
+            Content="Войти"
+            IsDefault="True" Margin="200,65,0,0" />
+        <wpfui:Button x:Name="ButtonResetPass"
+            Width="350"
+            Height="35"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Appearance="Transparent"
+            Content="Забыли пароль?" Cursor="Hand" Margin="0,155,0,0" />
+    </Grid>
+</Page>

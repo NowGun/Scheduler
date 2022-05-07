@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler", "Scheduler\Scheduler.csproj", "{431D29D8-5793-402C-A55B-F0B499CE02E9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFUI", "wpfui-1.2.6\src\WPFUI\WPFUI.csproj", "{1ADC87D1-8963-4100-845A-18477824718E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{431D29D8-5793-402C-A55B-F0B499CE02E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{431D29D8-5793-402C-A55B-F0B499CE02E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{431D29D8-5793-402C-A55B-F0B499CE02E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ADC87D1-8963-4100-845A-18477824718E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ADC87D1-8963-4100-845A-18477824718E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ADC87D1-8963-4100-845A-18477824718E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ADC87D1-8963-4100-845A-18477824718E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
