@@ -25,8 +25,16 @@ namespace Scheduler.Pages
         public Entry()
         {
             InitializeComponent();
+
+            LoadData();
         }
 
+        private void LoadData()
+        {
+            CheckBoxSaveEntry.IsChecked = Properties.Settings.Default.SaveEntry;
+            TextBoxLogin.Text = Properties.Settings.Default.Login;
+            PasswordBoxPass.Text = Properties.Settings.Default.Password;
+        }
         private void ButtonReg_Click(object sender, RoutedEventArgs e)
         {
             (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("регистрация");
@@ -48,6 +56,22 @@ namespace Scheduler.Pages
 
                     if (user != null)
                     {
+                        if (CheckBoxSaveEntry.IsChecked == true)
+                        {
+                            Properties.Settings.Default.Login = TextBoxLogin.Text.Trim();
+                            Properties.Settings.Default.Password = PasswordBoxPass.Text.Trim();
+                        }
+                        else
+                        {
+                            Properties.Settings.Default.Login = "";
+                            Properties.Settings.Default.Password = "";
+                        }
+
+                        Properties.Settings.Default.IdUser = (int)user.Idusers;
+
+                        Properties.Settings.Default.Save();
+
+                        (Application.Current.MainWindow as MainWindow).isEntry = true;
                         (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Collapsed;
                         (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Visible;
                         (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("планы");
@@ -61,6 +85,24 @@ namespace Scheduler.Pages
             (Application.Current.MainWindow as MainWindow).ProgressRingLoad.Visibility = Visibility.Hidden;
             ButtonEntry.IsEnabled = true;
             ButtonReg.IsEnabled = true;
+        }
+
+        private void CheckBoxSaveEntry_Click(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.SaveEntry = CheckBoxSaveEntry.IsChecked ?? false;
+
+            if (CheckBoxSaveEntry.IsChecked == true)
+            {
+                Properties.Settings.Default.Login = TextBoxLogin.Text.Trim();
+                Properties.Settings.Default.Password = PasswordBoxPass.Text.Trim();
+            }
+            else
+            {
+                Properties.Settings.Default.Login = "";
+                Properties.Settings.Default.Password = "";
+            }
+
+            Properties.Settings.Default.Save();
         }
     }
 }

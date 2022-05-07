@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Scheduler.DataBaseClass;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,12 +25,25 @@ namespace Scheduler.Pages
         public Settings()
         {
             InitializeComponent();
-            LoadSetting();
         }
         
         private void LoadSetting()
         {
             ComboBoxTheme.SelectedIndex = Properties.Settings.Default.Theme;
+
+            if (!(Application.Current.MainWindow as MainWindow).isEntry) ExpanderUser.Visibility = Visibility.Collapsed;
+            else if ((Application.Current.MainWindow as MainWindow).isEntry) ExpanderUser.Visibility = Visibility.Visible;
+        }
+        private async void LoadProfile()
+        {
+            using schedulerContext db = new();
+
+            User? u = await db.Users.FirstOrDefaultAsync(u => u.Idusers == Properties.Settings.Default.IdUser);
+
+            if (u != null)
+            {
+                LabelLogin.Content = $"Добро пожаловать, {u.UsersLogin}";
+            }
         }
         private void ComboBoxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -38,6 +53,22 @@ namespace Scheduler.Pages
             Classes.SettingProgram s = new();
             s.ChangeTheme();
         }
-        
+
+        private void ExpanderUser_Expanded(object sender, RoutedEventArgs e)
+        {
+            LoadProfile();
+        }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadSetting();
+        }
+
+        private void ButtonExit_Click(object sender, RoutedEventArgs e)
+        {
+            (Application.Current.MainWindow as MainWindow).isEntry = false;
+            (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Visible;
+            (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Collapsed;
+            (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("Entry");
+        }
     }
 }

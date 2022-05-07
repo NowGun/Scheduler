@@ -80,8 +80,8 @@
                         Timeout="5000" Margin="100,0,25,25" />
         <wpfui:TitleBar
             Title="Планировщик"
-            Height="50"
-            VerticalAlignment="Center"
+            Height="51"
+            VerticalAlignment="Top"
             ForceShutdown="False"
             UseSnapLayout="True">
             <!--  You can put additional controls in the header, such as a search bar.  -->

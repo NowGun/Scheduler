@@ -27,6 +27,8 @@ namespace Scheduler
             InitializeComponent();
             InitializeUi();
         }
+
+        public bool isEntry = false;
         private void InitializeUi()
         {
             Loaded += (sender, args) =>

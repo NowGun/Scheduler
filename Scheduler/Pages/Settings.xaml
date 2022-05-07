@@ -9,7 +9,7 @@
     Title="Settings"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Loaded="Page_Loaded">
 
     <Grid>
         <Label
@@ -30,6 +30,18 @@
             <ComboBoxItem Content="Темная" />
             <ComboBoxItem Content="Светлая" />
         </ComboBox>
+        <Expander x:Name="ExpanderUser" Header="Настройки аккаунта" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="20,80,20,0" Padding="12,12,12,12" IsExpanded="True" Expanded="ExpanderUser_Expanded" FontSize="14">
+            <Grid>
+                <StackPanel>
+                    <Grid Margin="0,0,0,10">
+                        <Label x:Name="LabelLogin" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" FontSize="14"/>
+                        <wpfui:Button x:Name="ButtonExit" Appearance="Secondary" Content="Выйти" HorizontalAlignment="Right" Height="35" Width="150" Click="ButtonExit_Click"/>
+                    </Grid>
+                    
+                    <wpfui:Button Appearance="Secondary" Content="Сменить пароль" HorizontalAlignment="Left" Width="150" Height="35"/>
+                </StackPanel>                
+            </Grid>            
+        </Expander>
         <Grid
             Margin="20,0,0,20"
             HorizontalAlignment="Left"
