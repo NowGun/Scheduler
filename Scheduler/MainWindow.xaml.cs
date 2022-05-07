@@ -44,5 +44,11 @@ namespace Scheduler
                 right: 0,
                 bottom: 0);
         }
+        public void Notify(string title, string message)
+        {
+            RootSnackbar.Title = title;
+            RootSnackbar.Message = message;
+            RootSnackbar.Show();
+        }
     }
 }

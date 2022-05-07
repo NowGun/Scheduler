@@ -65,6 +65,7 @@
                         VerticalAlignment="Top"
                         FontSize="24"
                         Navigation="{Binding ElementName=RootNavigation}" />
+                    <wpfui:ProgressRing x:Name="ProgressRingLoad" IsIndeterminate="True" FontSize="72" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,20,20,0" Visibility="Hidden"  />
                 </Grid>
             </Border>
         </Grid>

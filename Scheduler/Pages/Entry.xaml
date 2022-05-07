@@ -31,7 +31,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Appearance="Secondary"
-            Content="Зарегистрироваться" Margin="-185,65,0,0" Click="ButtonReg_Click" />
+            Content="Зарегистрироваться" Margin="-185,65,0,0" Click="ButtonReg_Click" Cursor="Hand" />
         <wpfui:Button x:Name="ButtonEntry"
             Width="150"
             Height="35"
