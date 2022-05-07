@@ -5,7 +5,17 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>3176366.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\3176366.ico" />
+    <None Remove="Images\3176366.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="3176366.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4">
@@ -13,10 +23,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
+    <PackageReference Include="ReactiveUI" Version="18.0.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\wpfui-1.2.6\src\WPFUI\WPFUI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\3176366.ico" />
+    <Resource Include="Images\3176366.png" />
   </ItemGroup>
 
   <ItemGroup>

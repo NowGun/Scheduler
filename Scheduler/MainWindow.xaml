@@ -114,6 +114,7 @@
             Title="Планировщик"
             Height="51"
             VerticalAlignment="Top"
+            Icon="/Images/3176366.png"
             ForceShutdown="False"
             UseSnapLayout="True">
             <!--  You can put additional controls in the header, such as a search bar.  -->
