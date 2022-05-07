@@ -32,7 +32,11 @@ namespace Scheduler.Pages
             ComboBoxTheme.SelectedIndex = Properties.Settings.Default.Theme;
 
             if (!(Application.Current.MainWindow as MainWindow).isEntry) ExpanderUser.Visibility = Visibility.Collapsed;
-            else if ((Application.Current.MainWindow as MainWindow).isEntry) ExpanderUser.Visibility = Visibility.Visible;
+            else if ((Application.Current.MainWindow as MainWindow).isEntry)
+            {
+                ExpanderUser.Visibility = Visibility.Visible;
+                LoadProfile();
+            }
         }
         private async void LoadProfile()
         {
@@ -53,11 +57,6 @@ namespace Scheduler.Pages
             Classes.SettingProgram s = new();
             s.ChangeTheme();
         }
-
-        private void ExpanderUser_Expanded(object sender, RoutedEventArgs e)
-        {
-            LoadProfile();
-        }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LoadSetting();
@@ -69,6 +68,15 @@ namespace Scheduler.Pages
             (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Visible;
             (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Collapsed;
             (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("Entry");
+        }
+
+        private void ButtonChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            (Application.Current.MainWindow as MainWindow).isEntry = false;
+            (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Visible;
+            (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Collapsed;
+            (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("Entry");
+            (Application.Current.MainWindow as MainWindow).RootDialog.Show();
         }
     }
 }

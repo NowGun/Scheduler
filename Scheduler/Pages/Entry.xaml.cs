@@ -86,7 +86,6 @@ namespace Scheduler.Pages
             ButtonEntry.IsEnabled = true;
             ButtonReg.IsEnabled = true;
         }
-
         private void CheckBoxSaveEntry_Click(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.SaveEntry = CheckBoxSaveEntry.IsChecked ?? false;
@@ -103,6 +102,10 @@ namespace Scheduler.Pages
             }
 
             Properties.Settings.Default.Save();
+        }
+        private void ButtonResetPass_Click(object sender, RoutedEventArgs e)
+        {
+            (Application.Current.MainWindow as MainWindow).RootDialog.Show();
         }
     }
 }

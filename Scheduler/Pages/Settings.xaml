@@ -30,7 +30,7 @@
             <ComboBoxItem Content="Темная" />
             <ComboBoxItem Content="Светлая" />
         </ComboBox>
-        <Expander x:Name="ExpanderUser" Header="Настройки аккаунта" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="20,80,20,0" Padding="12,12,12,12" IsExpanded="True" Expanded="ExpanderUser_Expanded" FontSize="14">
+        <Expander x:Name="ExpanderUser" Header="Настройки аккаунта" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="20,80,20,0" Padding="12,12,12,12" IsExpanded="True" FontSize="14">
             <Grid>
                 <StackPanel>
                     <Grid Margin="0,0,0,10">
@@ -38,7 +38,7 @@
                         <wpfui:Button x:Name="ButtonExit" Appearance="Secondary" Content="Выйти" HorizontalAlignment="Right" Height="35" Width="150" Click="ButtonExit_Click"/>
                     </Grid>
                     
-                    <wpfui:Button Appearance="Secondary" Content="Сменить пароль" HorizontalAlignment="Left" Width="150" Height="35"/>
+                    <wpfui:Button x:Name="ButtonChangePassword" Appearance="Secondary" Content="Сменить пароль" HorizontalAlignment="Left" Width="150" Height="35" Click="ButtonChangePassword_Click"/>
                 </StackPanel>                
             </Grid>            
         </Expander>

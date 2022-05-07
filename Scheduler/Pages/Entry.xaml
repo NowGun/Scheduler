@@ -53,8 +53,7 @@
             VerticalAlignment="Center"
             Appearance="Primary"
             Click="ButtonEntry_Click"
-            Content="Войти"
-            IsDefault="True" />
+            Content="Войти" />
         <wpfui:Button
             x:Name="ButtonResetPass"
             Width="350"
@@ -64,6 +63,6 @@
             VerticalAlignment="Center"
             Appearance="Transparent"
             Content="Забыли пароль?"
-            Cursor="Hand" />
+            Cursor="Hand" Click="ButtonResetPass_Click" />
     </Grid>
 </Page>
