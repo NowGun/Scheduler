@@ -31,6 +31,7 @@ namespace Scheduler.Pages
         {
             Classes.SettingProgram s = new();
             (Application.Current.MainWindow as MainWindow).ProgressRingLoad.Visibility = Visibility.Visible;
+            ButtonReg.IsEnabled = false;
 
             if (!String.IsNullOrWhiteSpace(TextBoxLogin.Text))
             {
@@ -56,7 +57,7 @@ namespace Scheduler.Pages
                             await db.SaveChangesAsync();
 
                             (Application.Current.MainWindow as MainWindow)?.Notify("Уведомление", "Регистрация успешна");
-                            (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("вход");
+                            (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("Entry");
                         }
                         else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "Логин занят");
                     }
@@ -67,6 +68,7 @@ namespace Scheduler.Pages
             else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "Введите логин");
 
             (Application.Current.MainWindow as MainWindow).ProgressRingLoad.Visibility = Visibility.Hidden;
+            ButtonReg.IsEnabled = true;
         }
     }
 }

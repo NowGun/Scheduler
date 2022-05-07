@@ -1,20 +1,66 @@
-﻿<Page x:Class="Scheduler.Pages.Registration"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Scheduler.Pages" xmlns:wpfui="clr-namespace:WPFUI.Controls;assembly=WPFUI"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Registration">
+﻿<Page
+    x:Class="Scheduler.Pages.Registration"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Scheduler.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wpfui="clr-namespace:WPFUI.Controls;assembly=WPFUI"
+    Title="Registration"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
 
     <Grid>
-        <wpfui:TextBox x:Name="TextBoxLogin" Placeholder="Логин" Width="420" Height="34" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,-165,0,0"/>
-        <wpfui:PasswordBox x:Name="PasswordBoxPass" Placeholder="Пароль" Height="33" Width="200" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-220,-65,0,0"/>
-        <wpfui:PasswordBox x:Name="PasswordBoxRPass" Placeholder="Подтверждение пароля" Width="200" Height="36" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="220,-65,0,0"/>
-        <wpfui:TextBox x:Name="TextBoxPhone" Placeholder="Номер телефона" Width="200" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="220,35,0,0"/>
-        <wpfui:TextBox x:Name="TextBoxMail" Placeholder="Почта" Width="200" Height="34" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-220,35,0,0"/>
-        <wpfui:Button x:Name="ButtonReg" Appearance="Secondary" Content="Зарегистрироваться" Height="35" Width="150" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="270,135,0,0" Click="ButtonReg_Click"/>
-        
+        <wpfui:TextBox
+            x:Name="TextBoxLogin"
+            Width="420"
+            Height="34"
+            Margin="0,-165,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Placeholder="Логин" />
+        <wpfui:PasswordBox
+            x:Name="PasswordBoxPass"
+            Width="200"
+            Height="33"
+            Margin="-220,-65,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Placeholder="Пароль" />
+        <wpfui:PasswordBox
+            x:Name="PasswordBoxRPass"
+            Width="200"
+            Height="36"
+            Margin="220,-65,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Placeholder="Подтверждение пароля" />
+        <wpfui:TextBox
+            x:Name="TextBoxPhone"
+            Width="200"
+            Height="35"
+            Margin="220,35,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Placeholder="Номер телефона" />
+        <wpfui:TextBox
+            x:Name="TextBoxMail"
+            Width="200"
+            Height="34"
+            Margin="-220,35,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Placeholder="Почта" />
+        <wpfui:Button
+            x:Name="ButtonReg"
+            Width="150"
+            Height="35"
+            Margin="270,135,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Appearance="Secondary"
+            Click="ButtonReg_Click"
+            Content="Зарегистрироваться" />
     </Grid>
 </Page>

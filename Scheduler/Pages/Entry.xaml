@@ -12,40 +12,53 @@
     mc:Ignorable="d">
 
     <Grid>
-        <wpfui:TextBox x:Name="TextBoxLogin"
+        <wpfui:TextBox
+            x:Name="TextBoxLogin"
             Width="350"
             Height="34"
+            Margin="0,-135,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Placeholder="Логин" Margin="0,-135,0,0" />
-        <wpfui:PasswordBox x:Name="PasswordBoxPass"
+            Placeholder="Логин" />
+        <wpfui:PasswordBox
+            x:Name="PasswordBoxPass"
             Width="350"
             Height="35"
             Margin="0,-35,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Placeholder="Пароль" />
-        <wpfui:Button x:Name="ButtonReg"
+        <wpfui:Button
+            x:Name="ButtonReg"
             Width="165"
             Height="35"
+            Margin="-185,65,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Appearance="Secondary"
-            Content="Зарегистрироваться" Margin="-185,65,0,0" Click="ButtonReg_Click" Cursor="Hand" />
-        <wpfui:Button x:Name="ButtonEntry"
+            Click="ButtonReg_Click"
+            Content="Зарегистрироваться"
+            Cursor="Hand" />
+        <wpfui:Button
+            x:Name="ButtonEntry"
             Width="150"
             Height="35"
+            Margin="200,65,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Appearance="Primary"
+            Click="ButtonEntry_Click"
             Content="Войти"
-            IsDefault="True" Margin="200,65,0,0" Click="ButtonEntry_Click" />
-        <wpfui:Button x:Name="ButtonResetPass"
+            IsDefault="True" />
+        <wpfui:Button
+            x:Name="ButtonResetPass"
             Width="350"
             Height="35"
+            Margin="0,155,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Appearance="Transparent"
-            Content="Забыли пароль?" Cursor="Hand" Margin="0,155,0,0" />
+            Content="Забыли пароль?"
+            Cursor="Hand" />
     </Grid>
 </Page>

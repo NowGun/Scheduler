@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Scheduler.DataBaseClass;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,11 +31,36 @@ namespace Scheduler.Pages
         {
             (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("регистрация");
         }
-        private void ButtonEntry_Click(object sender, RoutedEventArgs e)
+        private async void ButtonEntry_Click(object sender, RoutedEventArgs e)
         {
-            (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Collapsed;
-            (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Visible;
-            (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("планы");
+            Classes.SettingProgram s = new();
+            (Application.Current.MainWindow as MainWindow).ProgressRingLoad.Visibility = Visibility.Visible;
+            ButtonEntry.IsEnabled = false;
+            ButtonReg.IsEnabled = false;
+
+            if (!String.IsNullOrWhiteSpace(TextBoxLogin.Text) && !String.IsNullOrWhiteSpace(PasswordBoxPass.Text))
+            {
+                using schedulerContext db = new();
+
+                if (await db.Database.CanConnectAsync())
+                {
+                    User? user = await db.Users.FirstOrDefaultAsync(u => u.UsersLogin == TextBoxLogin.Text.Trim() && u.UsersPassword == s.Hash(PasswordBoxPass.Text.Trim()));
+
+                    if (user != null)
+                    {
+                        (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Collapsed;
+                        (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Visible;
+                        (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("планы");
+                    }
+                    else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "Логин или пароль не совпадают");
+                }
+                else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "База данных недоступна");
+            }
+            else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "Заполните поля");
+
+            (Application.Current.MainWindow as MainWindow).ProgressRingLoad.Visibility = Visibility.Hidden;
+            ButtonEntry.IsEnabled = true;
+            ButtonReg.IsEnabled = true;
         }
     }
 }
