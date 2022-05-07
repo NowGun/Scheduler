@@ -23,6 +23,21 @@ namespace Scheduler.Pages
         public Settings()
         {
             InitializeComponent();
+            LoadSetting();
         }
+        
+        private void LoadSetting()
+        {
+            ComboBoxTheme.SelectedIndex = Properties.Settings.Default.Theme;
+        }
+        private void ComboBoxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Properties.Settings.Default.Theme = ComboBoxTheme.SelectedIndex;
+            Properties.Settings.Default.Save();
+
+            Classes.SettingProgram s = new();
+            s.ChangeTheme();
+        }
+        
     }
 }

@@ -31,7 +31,9 @@ namespace Scheduler
         {
             Loaded += (sender, args) =>
             {
-                WPFUI.Appearance.Watcher.Watch(this, WPFUI.Appearance.BackgroundType.Mica, true, true);
+                Classes.SettingProgram s = new();
+                s.ChangeTheme();
+                //WPFUI.Appearance.Watcher.Watch(this, WPFUI.Appearance.BackgroundType.Mica, true, true);
             };
         }
         private void RootNavigation_OnNavigated(INavigation sender, RoutedNavigationEventArgs e)

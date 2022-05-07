@@ -32,12 +32,13 @@
                 Navigated="RootNavigation_OnNavigated"
                 SelectedPageIndex="0">
                 <wpfui:NavigationStore.Items>
-                    <wpfui:NavigationItem
+                    <wpfui:NavigationItem x:Name="NavigationItemEntry"
                         Content="Вход"
                         Icon="LockOpen24"
                         Page="{x:Type pages:Entry}"
                         Tag="Entry" />
-                    <wpfui:NavigationItem Content="Планы" Icon="ChannelSubtract24" Page="{x:Type pages:Schedule}"/>
+                    <wpfui:NavigationItem x:Name="NavigationItemShedule" Content="Планы" Icon="ChannelSubtract24" Page="{x:Type pages:Schedule}" Visibility="Collapsed"/>
+                    <wpfui:NavigationItem Content="Регистрация" Page="{x:Type pages:Registration}" Visibility="Collapsed"/>
                 </wpfui:NavigationStore.Items>
                 <wpfui:NavigationStore.Footer>
                     <wpfui:NavigationItem
@@ -64,22 +65,18 @@
                         VerticalAlignment="Top"
                         FontSize="24"
                         Navigation="{Binding ElementName=RootNavigation}" />
-
-                    <wpfui:Snackbar
+                </Grid>
+            </Border>
+        </Grid>
+        <wpfui:Snackbar
                         x:Name="RootSnackbar"
-                        Title="Hello World!"
                         Grid.Row="1"
                         MaxWidth="600"
                         Appearance="Secondary"
                         Icon="PuzzlePiece24"
                         IsShown="False"
-                        Message="Remember that the Heat Death of Universe is coming someday, no time to explain - let's go!"
                         ShowCloseButton="True"
-                        Timeout="5000" />
-                </Grid>
-            </Border>
-        </Grid>
-
+                        Timeout="5000" Margin="100,0,25,25" />
         <wpfui:TitleBar
             Title="Планировщик"
             Height="50"

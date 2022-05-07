@@ -24,5 +24,16 @@ namespace Scheduler.Pages
         {
             InitializeComponent();
         }
+
+        private void ButtonReg_Click(object sender, RoutedEventArgs e)
+        {
+            (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("регистрация");
+        }
+        private void ButtonEntry_Click(object sender, RoutedEventArgs e)
+        {
+            (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Collapsed;
+            (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Visible;
+            (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("планы");
+        }
     }
 }

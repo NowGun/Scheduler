@@ -24,5 +24,10 @@ namespace Scheduler.Pages
         {
             InitializeComponent();
         }
+
+        private void ButtonReg_Click(object sender, RoutedEventArgs e)
+        {
+            (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("вход");
+        }
     }
 }
