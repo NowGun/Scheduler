@@ -33,6 +33,8 @@ namespace Scheduler.Pages
 
         private bool isOpen = false;
         private List<int> idCaseWork = new();
+        private List<int> idCaseDone = new();
+
         private void LoadSchedule()
         {
             DatePickerDate.SelectedDate = DateTime.Now.Date;
@@ -41,13 +43,14 @@ namespace Scheduler.Pages
         {
             DatePickerDate.SelectedDate = DatePickerDate.SelectedDate.Value.AddDays(1);
             LoadListBoxCaseWork();
+            LoadListBoxCaseDone();
         }
         private void ButtonDatePrev_Click(object sender, RoutedEventArgs e)
         {
             DatePickerDate.SelectedDate = DatePickerDate.SelectedDate.Value.AddDays(-1);
             LoadListBoxCaseWork();
+            LoadListBoxCaseDone();
         }
-
         private void ButtonOpenInfo_Click(object sender, RoutedEventArgs e)
         {
             switch (isOpen)
@@ -77,24 +80,42 @@ namespace Scheduler.Pages
 
                 foreach (var c in c2)
                 {
-                    if (c.CaseBookmark == 0)
+                    co1.Add(new CaseWork
                     {
-                        co1.Add(new CaseWork
-                        {
-                            titleCase = c.CaseTitle,
-                        });
-                    }
-                    else
-                    {
-                        co1.Add(new CaseWork
-                        {
-                            titleCase = c.CaseTitle,
-                        });
-                    }
+                        titleCase = c.CaseTitle,
+                    });
+
                     idCaseWork.Add((int)c.Idcase);
                 }
 
                 ListBoxCaseWork.ItemsSource = co1;
+            }
+            catch (Exception ex)
+            {
+                (Application.Current.MainWindow as MainWindow)?.MessageBoxNotify("Ошибка", ex.Message);
+            }
+        }
+        private async void LoadListBoxCaseDone()
+        {
+            try
+            {
+                idCaseDone.Clear();
+                ObservableCollection<CaseDone> co2 = new();
+
+                using schedulerContext db = new();
+
+                var c2 = await db.Cases.Where(c => c.UsersIdusers == Properties.Settings.Default.IdUser && c.CaseDone == 1 && c.CaseDate == DateOnly.FromDateTime((DateTime)DatePickerDate.SelectedDate)).ToListAsync();
+
+                foreach (var c in c2)
+                {
+                    co2.Add(new CaseDone
+                    {
+                        titleCaseDone = c.CaseTitle,
+                    });
+
+                    idCaseDone.Add((int)c.Idcase);
+                }
+                ListBoxCaseDone.ItemsSource = co2;
             }
             catch (Exception ex)
             {
@@ -140,6 +161,7 @@ namespace Scheduler.Pages
         {
             LoadSchedule();
             LoadListBoxCaseWork();
+            LoadListBoxCaseDone();
         }
         private async void ListBoxCaseWork_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -168,6 +190,16 @@ namespace Scheduler.Pages
                             break;
                         case 1:
                             ButtonBookMark.Appearance = WPFUI.Common.Appearance.Caution;
+                            break;
+                    }
+
+                    switch (caseCheck.CaseDone)
+                    {
+                        case 0:
+                            ButtonDone.Appearance = WPFUI.Common.Appearance.Transparent;
+                            break;
+                        case 1:
+                            ButtonDone.Appearance = WPFUI.Common.Appearance.Success;
                             break;
                     }
                 }
@@ -254,15 +286,111 @@ namespace Scheduler.Pages
                 }
             }
         }
-
         private void DatePickerDate_CalendarClosed(object sender, RoutedEventArgs e)
         {
             LoadListBoxCaseWork();
+            LoadListBoxCaseDone();
+        }
+        private async void ButtonDone_Click(object sender, RoutedEventArgs e)
+        {
+            using schedulerContext db = new();
+
+            if (ListBoxCaseDone.SelectedIndex == -1)
+            {
+                Case? caseInfo = await db.Cases.FirstOrDefaultAsync(c => c.Idcase == idCaseWork[ListBoxCaseWork.SelectedIndex]);
+                if (caseInfo != null)
+                {
+                    if (caseInfo.CaseDone == 0)
+                    {
+                        ButtonDone.Appearance = WPFUI.Common.Appearance.Success;
+                        caseInfo.CaseDone = 1;
+                    }
+                    else
+                    {
+                        ButtonDone.Appearance = WPFUI.Common.Appearance.Secondary;
+                        caseInfo.CaseDone = 0;
+                    }
+
+                    await db.SaveChangesAsync();
+
+                    LoadListBoxCaseWork();
+                    LoadListBoxCaseDone();
+                }
+            }
+            else
+            {
+                Case? caseInfo = await db.Cases.FirstOrDefaultAsync(c => c.Idcase == idCaseDone[ListBoxCaseDone.SelectedIndex]);
+                if (caseInfo != null)
+                {
+                    if (caseInfo.CaseDone == 0)
+                    {
+                        ButtonDone.Appearance = WPFUI.Common.Appearance.Success;
+                        caseInfo.CaseDone = 1;
+                    }
+                    else
+                    {
+                        ButtonDone.Appearance = WPFUI.Common.Appearance.Secondary;
+                        caseInfo.CaseDone = 0;
+                    }
+
+                    await db.SaveChangesAsync();
+
+                    LoadListBoxCaseWork();
+                    LoadListBoxCaseDone();
+                }
+            }            
+        }
+        private async void ListBoxCaseDone_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListBoxCaseDone.SelectedItem != null)
+            {
+                var anim = (Storyboard)FindResource("AnimOpenInfo");
+                anim.Begin();
+                isOpen = true;
+
+                using schedulerContext db = new();
+
+                var caseCheck = await db.Cases.Where(c => c.Idcase == idCaseDone[ListBoxCaseDone.SelectedIndex]).FirstOrDefaultAsync();
+
+                if (caseCheck != null)
+                {
+                    TextBoxCaseTitle.Text = caseCheck.CaseTitle;
+                    TextBoxCaseDescription.Text = caseCheck.CaseDescription;
+                    DatePickerCaseDate.Text = caseCheck.CaseDate.ToString();
+                    TextBoxCaseTimeStart.Text = caseCheck.CaseTimestart.ToString();
+                    TextBoxCaseTimeEnd.Text = caseCheck.CaseTimeend.ToString();
+
+                    switch (caseCheck.CaseBookmark)
+                    {
+                        case 0:
+                            ButtonBookMark.Appearance = WPFUI.Common.Appearance.Transparent;
+                            break;
+                        case 1:
+                            ButtonBookMark.Appearance = WPFUI.Common.Appearance.Caution;
+                            break;
+                    }
+                    switch (caseCheck.CaseDone)
+                    {
+                        case 0:
+                            ButtonDone.Appearance = WPFUI.Common.Appearance.Transparent;
+                            break;
+                        case 1:
+                            ButtonDone.Appearance = WPFUI.Common.Appearance.Success;
+                            break;
+                    }
+
+                }
+            }
         }
     }
 
     public class CaseWork
     {
         public string? titleCase { get; set; }
+    }
+
+    public class CaseDone
+    {
+        public string? titleCaseDone { get; set; }
     }
 }

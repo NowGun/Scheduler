@@ -180,17 +180,26 @@
             <wpfui:Card>
                 <Grid>
                     <Label
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Content="Информация"
                         FontSize="16" />
-                    <StackPanel Margin="0,30,0,0">
+                    <wpfui:Button
+                        x:Name="ButtonDone"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Appearance="Secondary"
+                        Click="ButtonDone_Click"
+                        Icon="Checkmark24" />
+                    <StackPanel Margin="0,35,0,0">
                         <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
                             <Label
                                 Margin="0,0,5.6,0"
                                 VerticalAlignment="Center"
                                 Content="Заголовок"
                                 FontSize="14" />
-                            <wpfui:TextBox x:Name="TextBoxCaseTitle"
+                            <wpfui:TextBox
+                                x:Name="TextBoxCaseTitle"
                                 Width="200"
                                 Height="35"
                                 HorizontalAlignment="Stretch" />
@@ -204,7 +213,8 @@
                                 VerticalAlignment="Center"
                                 Content="Описание"
                                 FontSize="14" />
-                            <wpfui:TextBox x:Name="TextBoxCaseDescription"
+                            <wpfui:TextBox
+                                x:Name="TextBoxCaseDescription"
                                 Width="200"
                                 Margin="0,1,0,0"
                                 AcceptsReturn="True"
@@ -220,7 +230,8 @@
                                 VerticalAlignment="Center"
                                 Content="Дата"
                                 FontSize="14" />
-                            <DatePicker x:Name="DatePickerCaseDate"
+                            <DatePicker
+                                x:Name="DatePickerCaseDate"
                                 Width="200"
                                 Height="35"
                                 HorizontalAlignment="Stretch" />
@@ -234,7 +245,8 @@
                                 VerticalAlignment="Center"
                                 Content="Начало"
                                 FontSize="14" />
-                            <wpfui:TextBox x:Name="TextBoxCaseTimeStart"
+                            <wpfui:TextBox
+                                x:Name="TextBoxCaseTimeStart"
                                 Width="200"
                                 Height="35"
                                 HorizontalAlignment="Stretch" />
@@ -248,34 +260,41 @@
                                 VerticalAlignment="Center"
                                 Content="Конец"
                                 FontSize="14" />
-                            <wpfui:TextBox x:Name="TextBoxCaseTimeEnd"
+                            <wpfui:TextBox
+                                x:Name="TextBoxCaseTimeEnd"
                                 Width="200"
                                 Height="35"
                                 HorizontalAlignment="Stretch" />
                         </StackPanel>
                     </StackPanel>
-                    <wpfui:Button x:Name="ButtonCaseSave"
+                    <wpfui:Button
+                        x:Name="ButtonCaseSave"
                         Width="110"
                         Height="35"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         Appearance="Secondary"
-                        Content="Сохранить" Click="ButtonCaseSave_Click" />
-                    <wpfui:Button x:Name="ButtonCaseDelete"
+                        Click="ButtonCaseSave_Click"
+                        Content="Сохранить" />
+                    <wpfui:Button
+                        x:Name="ButtonCaseDelete"
                         Width="110"
                         Height="35"
                         Margin="0,0,115,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         Appearance="Danger"
-                        Content="Удалить" Click="ButtonCaseDelete_Click" />
-                    <wpfui:Button x:Name="ButtonBookMark"
+                        Click="ButtonCaseDelete_Click"
+                        Content="Удалить" />
+                    <wpfui:Button
+                        x:Name="ButtonBookMark"
                         Width="35"
                         Height="35"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
                         Appearance="Transparent"
-                        Icon="Bookmark24" Click="ButtonBookMark_Click" />
+                        Click="ButtonBookMark_Click"
+                        Icon="Bookmark24" />
                 </Grid>
             </wpfui:Card>
         </Grid>
@@ -292,7 +311,8 @@
                     x:Name="DatePickerDate"
                     Width="250"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center" CalendarClosed="DatePickerDate_CalendarClosed" />
+                    VerticalAlignment="Center"
+                    CalendarClosed="DatePickerDate_CalendarClosed" />
                 <wpfui:Button
                     x:Name="ButtonDateNext"
                     HorizontalAlignment="Right"
@@ -314,14 +334,15 @@
                                 <ListBox
                                     x:Name="ListBoxCaseWork"
                                     HorizontalContentAlignment="Stretch"
+                                    Background="{x:Null}"
+                                    BorderBrush="{x:Null}"
                                     SelectionChanged="ListBoxCaseWork_SelectionChanged"
-                                    VirtualizingPanel.ScrollUnit="Pixel" Background="{x:Null}" BorderBrush="{x:Null}">
+                                    VirtualizingPanel.ScrollUnit="Pixel">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <Grid>
-                                                <CheckBox HorizontalAlignment="Left" />
                                                 <Label
-                                                    Margin="30,0,30,0"
+                                                    Margin="10,0,10,0"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Center"
                                                     Content="{Binding titleCase}"
@@ -335,8 +356,28 @@
                             <Expander
                                 Margin="0,10,0,0"
                                 VerticalAlignment="Top"
-                                Header="Завершенные" FontSize="14">
-                                <ListBox x:Name="ListBoxCaseDone" />
+                                FontSize="14"
+                                Header="Завершенные">
+                                <ListBox
+                                    x:Name="ListBoxCaseDone"
+                                    HorizontalContentAlignment="Stretch"
+                                    Background="{x:Null}"
+                                    BorderBrush="{x:Null}"
+                                    SelectionChanged="ListBoxCaseDone_SelectionChanged"
+                                    VirtualizingPanel.ScrollUnit="Pixel">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Label
+                                                    Margin="10,0,10,0"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    Content="{Binding titleCaseDone}"
+                                                    FontSize="14" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
                             </Expander>
                         </StackPanel>
 
@@ -357,7 +398,8 @@
                             HorizontalAlignment="Right"
                             Appearance="Secondary"
                             Click="ButtonAddCase_Click"
-                            Content="Добавить" />
+                            Content="Добавить"
+                            IsDefault="True" />
                     </Grid>
                 </wpfui:Card>
             </Grid>
