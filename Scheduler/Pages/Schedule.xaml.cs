@@ -28,7 +28,7 @@ namespace Scheduler.Pages
         public Schedule()
         {
             InitializeComponent();
-            LoadSchedule();
+            
         }
 
         private bool isOpen = false;
@@ -40,10 +40,12 @@ namespace Scheduler.Pages
         private void ButtonDateNext_Click(object sender, RoutedEventArgs e)
         {
             DatePickerDate.SelectedDate = DatePickerDate.SelectedDate.Value.AddDays(1);
+            LoadListBoxCaseWork();
         }
         private void ButtonDatePrev_Click(object sender, RoutedEventArgs e)
         {
             DatePickerDate.SelectedDate = DatePickerDate.SelectedDate.Value.AddDays(-1);
+            LoadListBoxCaseWork();
         }
 
         private void ButtonOpenInfo_Click(object sender, RoutedEventArgs e)
@@ -71,7 +73,7 @@ namespace Scheduler.Pages
 
                 using schedulerContext db = new();
 
-                var c2 = await db.Cases.Where(c => c.UsersIdusers == Properties.Settings.Default.IdUser && c.CaseDone == 0).ToListAsync();
+                var c2 = await db.Cases.Where(c => c.UsersIdusers == Properties.Settings.Default.IdUser && c.CaseDone == 0 && c.CaseDate == DateOnly.FromDateTime((DateTime)DatePickerDate.SelectedDate)).ToListAsync();
 
                 foreach (var c in c2)
                 {
@@ -101,9 +103,8 @@ namespace Scheduler.Pages
         }
         private void ExpanderWork_Expanded(object sender, RoutedEventArgs e)
         {
-            LoadListBoxCaseWork();
+            //LoadListBoxCaseWork();
         }
-
         private async void ButtonAddCase_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -135,12 +136,11 @@ namespace Scheduler.Pages
                 (Application.Current.MainWindow as MainWindow)?.MessageBoxNotify("Ошибка", ex.Message);
             }
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadSchedule();
             LoadListBoxCaseWork();
         }
-
         private async void ListBoxCaseWork_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ListBoxCaseWork.SelectedItem != null)
@@ -173,7 +173,6 @@ namespace Scheduler.Pages
                 }
             }
         }
-
         private async void ButtonBookMark_Click(object sender, RoutedEventArgs e)
         {
             using schedulerContext db = new();
@@ -196,7 +195,6 @@ namespace Scheduler.Pages
                 await db.SaveChangesAsync();
             }
         }
-
         private async void ButtonCaseSave_Click(object sender, RoutedEventArgs e)
         {
             if (!String.IsNullOrWhiteSpace(TextBoxCaseTitle.Text))
@@ -211,7 +209,7 @@ namespace Scheduler.Pages
                     {
                         c.CaseTitle = TextBoxCaseTitle.Text;
                         c.CaseDescription = TextBoxCaseDescription.Text;
-                        c.CaseDate = DateOnly.FromDateTime(DatePickerCaseDate.DisplayDate);
+                        c.CaseDate = DateOnly.FromDateTime((DateTime)DatePickerCaseDate.SelectedDate);
 
                         if (!String.IsNullOrWhiteSpace(TextBoxCaseTimeStart.Text))
                         {
@@ -234,7 +232,6 @@ namespace Scheduler.Pages
             }
             else (Application.Current.MainWindow as MainWindow).Notify("Уведомление", "Заполните заголовок");
         }
-
         private async void ButtonCaseDelete_Click(object sender, RoutedEventArgs e)
         {
             if (ListBoxCaseWork.Items.Count == 0) (Application.Current.MainWindow as MainWindow).Notify("Сообщение", "Произошла ошибка");
@@ -256,6 +253,11 @@ namespace Scheduler.Pages
                     isOpen = false;
                 }
             }
+        }
+
+        private void DatePickerDate_CalendarClosed(object sender, RoutedEventArgs e)
+        {
+            LoadListBoxCaseWork();
         }
     }
 
