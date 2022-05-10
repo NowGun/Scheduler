@@ -67,6 +67,7 @@ namespace Scheduler.Pages
             (Application.Current.MainWindow as MainWindow).isEntry = false;
             (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Visible;
             (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Collapsed;
+            (Application.Current.MainWindow as MainWindow).NavigationItemBookMark.Visibility = Visibility.Collapsed;
             (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("Entry");
         }
 
@@ -75,6 +76,7 @@ namespace Scheduler.Pages
             (Application.Current.MainWindow as MainWindow).isEntry = false;
             (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Visible;
             (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Collapsed;
+            (Application.Current.MainWindow as MainWindow).NavigationItemBookMark.Visibility = Visibility.Collapsed;
             (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("Entry");
             (Application.Current.MainWindow as MainWindow).RootDialog.Show();
         }

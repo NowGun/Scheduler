@@ -16,6 +16,7 @@ namespace Scheduler.DataBaseClass
         {
         }
 
+        public virtual DbSet<Case> Cases { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,6 +32,51 @@ namespace Scheduler.DataBaseClass
         {
             modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
                 .HasCharSet("utf8mb4");
+
+            modelBuilder.Entity<Case>(entity =>
+            {
+                entity.HasKey(e => e.Idcase)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("case");
+
+                entity.HasIndex(e => e.UsersIdusers, "fk_case_users_idx");
+
+                entity.HasIndex(e => e.Idcase, "idcase_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Idcase).HasColumnName("idcase");
+
+                entity.Property(e => e.CaseBookmark).HasColumnName("case_bookmark");
+
+                entity.Property(e => e.CaseDate).HasColumnName("case_date");
+
+                entity.Property(e => e.CaseDescription)
+                    .HasColumnType("text")
+                    .HasColumnName("case_description");
+
+                entity.Property(e => e.CaseDone).HasColumnName("case_done");
+
+                entity.Property(e => e.CaseTimeend)
+                    .HasColumnType("time")
+                    .HasColumnName("case_timeend");
+
+                entity.Property(e => e.CaseTimestart)
+                    .HasColumnType("time")
+                    .HasColumnName("case_timestart");
+
+                entity.Property(e => e.CaseTitle)
+                    .HasColumnType("text")
+                    .HasColumnName("case_title");
+
+                entity.Property(e => e.UsersIdusers).HasColumnName("users_idusers");
+
+                entity.HasOne(d => d.UsersIdusersNavigation)
+                    .WithMany(p => p.Cases)
+                    .HasForeignKey(d => d.UsersIdusers)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_case_users");
+            });
 
             modelBuilder.Entity<User>(entity =>
             {

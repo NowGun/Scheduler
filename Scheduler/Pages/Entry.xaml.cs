@@ -74,6 +74,7 @@ namespace Scheduler.Pages
                         (Application.Current.MainWindow as MainWindow).isEntry = true;
                         (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Collapsed;
                         (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Visible;
+                        (Application.Current.MainWindow as MainWindow).NavigationItemBookMark.Visibility = Visibility.Visible;
                         (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("планы");
                     }
                     else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "Логин или пароль не совпадают");

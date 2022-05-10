@@ -5,55 +5,332 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Scheduler.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:valueConverters="clr-namespace:Scheduler.Classes.ValueConverters"
     xmlns:wpfui="clr-namespace:WPFUI.Controls;assembly=WPFUI"
     Title="Schedule"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Page.Resources>
-        <valueConverters:DateToStringConverter x:Key="DateToStringConverter" />
-        <valueConverters:DateToTimeStringConverter x:Key="DateToTimeStringConverter" />
+        <Storyboard x:Key="AnimOpenInfo">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="GridSchedule" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                <EasingThicknessKeyFrame KeyTime="00:00:00.3000000" Value="0,0,310,0">
+                    <EasingThicknessKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingThicknessKeyFrame.EasingFunction>
+                </EasingThicknessKeyFrame>
+            </ThicknessAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInformation" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.004">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInformation" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="-219.021">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="-0.007">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInformation" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.009">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInformation" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="148.708">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="-0.005">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInformation" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ButtonOpenInfo" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="-90">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="AnimCloseInfo">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInformation" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.014">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInformation" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.004">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInformation" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="147.828">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInformation" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="-219.125">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInformation" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="GridSchedule" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                <EasingThicknessKeyFrame KeyTime="00:00:00" Value="0,0,310,0">
+                    <EasingThicknessKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingThicknessKeyFrame.EasingFunction>
+                </EasingThicknessKeyFrame>
+                <EasingThicknessKeyFrame KeyTime="00:00:00.3000000" Value="0,0,10,0">
+                    <EasingThicknessKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingThicknessKeyFrame.EasingFunction>
+                </EasingThicknessKeyFrame>
+            </ThicknessAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ButtonOpenInfo" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="-90">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </Page.Resources>
-    <Grid>
-        <Grid Margin="10,0,10,0" VerticalAlignment="Top">
-            <wpfui:Button
-                HorizontalAlignment="Left"
-                Appearance="Transparent"
-                Command="{Binding PreviousDay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:Schedule}}}"
-                Icon="ChevronLeft24" />
-            <Label
-                HorizontalAlignment="Center"
-                VerticalContentAlignment="Center"
-                Content="{Binding StartDate, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:Schedule}}, Converter={StaticResource DateToStringConverter}}" />
-            <wpfui:Button
-                HorizontalAlignment="Right"
-                Appearance="Transparent"
-                Command="{Binding NextDay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:Schedule}}}"
-                Icon="ChevronRight24" />
+    <Grid Margin="10,0,10,10">
+        <wpfui:Button
+            x:Name="ButtonOpenInfo"
+            Width="35"
+            Height="35"
+            Margin="0,-60,0,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Appearance="Transparent"
+            Click="ButtonOpenInfo_Click"
+            Icon="LineHorizontal320"
+            RenderTransformOrigin="0.5,0.5">
+            <wpfui:Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </wpfui:Button.RenderTransform>
+        </wpfui:Button>
+        <Grid
+            x:Name="GridInformation"
+            Width="300"
+            HorizontalAlignment="Right"
+            d:IsHidden="True"
+            Opacity="0"
+            RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <wpfui:Card>
+                <Grid>
+                    <Label
+                        VerticalAlignment="Top"
+                        Content="Информация"
+                        FontSize="16" />
+                    <StackPanel Margin="0,30,0,0">
+                        <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
+                            <Label
+                                Margin="0,0,5.6,0"
+                                VerticalAlignment="Center"
+                                Content="Заголовок"
+                                FontSize="14" />
+                            <wpfui:TextBox
+                                Width="200"
+                                Height="35"
+                                HorizontalAlignment="Stretch" />
+                        </StackPanel>
+                        <StackPanel
+                            Margin="0,10,0,0"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                            <Label
+                                Margin="0,0,8,0"
+                                VerticalAlignment="Center"
+                                Content="Описание"
+                                FontSize="14" />
+                            <wpfui:TextBox
+                                Width="200"
+                                Margin="0,1,0,0"
+                                AcceptsReturn="True"
+                                MinLines="3"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel
+                            Margin="0,10,0,0"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                            <Label
+                                Margin="0,0,42.3,0"
+                                VerticalAlignment="Center"
+                                Content="Дата"
+                                FontSize="14" />
+                            <DatePicker
+                                Width="200"
+                                Height="35"
+                                HorizontalAlignment="Stretch" />
+                        </StackPanel>
+                        <StackPanel
+                            Margin="0,10,0,0"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                            <Label
+                                Margin="0,0,24.3,0"
+                                VerticalAlignment="Center"
+                                Content="Начало"
+                                FontSize="14" />
+                            <wpfui:TextBox
+                                Width="200"
+                                Height="35"
+                                HorizontalAlignment="Stretch" />
+                        </StackPanel>
+                        <StackPanel
+                            Margin="0,10,0,0"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                            <Label
+                                Margin="0,0,31.9,0"
+                                VerticalAlignment="Center"
+                                Content="Конец"
+                                FontSize="14" />
+                            <wpfui:TextBox
+                                Width="200"
+                                Height="35"
+                                HorizontalAlignment="Stretch" />
+                        </StackPanel>
+                    </StackPanel>
+                    <wpfui:Button
+                        Width="150"
+                        Height="35"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Appearance="Secondary"
+                        Content="Сохранить" />
+                </Grid>
+            </wpfui:Card>
         </Grid>
-        <Grid Margin="10,35,10,10">
-            <ListBox
-                Grid.Row="1"
-                Grid.ColumnSpan="3"
-                ItemsSource="{Binding UserTasks, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:Schedule}}}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
 
-                            <Border Background="{StaticResource SecondColor}" CornerRadius="5">
-                                <Label HorizontalContentAlignment="Center" Content="{Binding PlannedStart, Converter={StaticResource DateToTimeStringConverter}}" />
-                            </Border>
+        <Grid x:Name="GridSchedule">
+            <Grid VerticalAlignment="Top">
+                <wpfui:Button
+                    x:Name="ButtonDatePrev"
+                    HorizontalAlignment="Left"
+                    Appearance="Secondary"
+                    Click="ButtonDatePrev_Click"
+                    Icon="ChevronLeft24" />
+                <DatePicker
+                    x:Name="DatePickerDate"
+                    Width="250"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+                <wpfui:Button
+                    x:Name="ButtonDateNext"
+                    HorizontalAlignment="Right"
+                    Appearance="Secondary"
+                    Click="ButtonDateNext_Click"
+                    Icon="ChevronRight24" />
+            </Grid>
+            <Grid Margin="0,45,0,0">
+                <wpfui:DynamicScrollViewer>
+                    <Grid Margin="10,0,10,0">
+                        <StackPanel>
+                            <Expander VerticalAlignment="Top" Header="В работе" FontSize="14">
+                                <ListBox x:Name="ListBoxCaseWork" Background="{x:Null}" BorderBrush="{x:Null}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <ListBoxItem>
+                                                <Grid>
+                                                    <CheckBox HorizontalAlignment="Left"/>
+                                                    <Label Content="{Binding titleCase}" HorizontalAlignment="Left" Margin="30,0,30,0" VerticalAlignment="Center" FontSize="14"/>
+                                                    <wpfui:Button Appearance="{Binding isBookMark}" Icon="Bookmark24" HorizontalAlignment="Right" Width="30" Height="30"/>
+                                                </Grid>
+                                            </ListBoxItem>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                    
+                                </ListBox>
+                            </Expander>
+                            <Expander
+                                Margin="0,10,0,0"
+                                VerticalAlignment="Top"
+                                Header="Завершенные">
+                                <ListBox x:Name="ListBoxCaseDone" />
+                            </Expander>
+                        </StackPanel>
 
-                            <Label Grid.Column="1" Content="{Binding Name}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                    </Grid>
+
+                </wpfui:DynamicScrollViewer>
+                <wpfui:Card Margin="10,0,10,0" VerticalAlignment="Bottom">
+                    <Grid Height="35">
+                        <wpfui:SymbolIcon HorizontalAlignment="Left" Symbol="Add24" />
+                        <wpfui:TextBox Margin="25,0,155,0" Placeholder="Добавить задачу" />
+                        <wpfui:Button
+                            Width="150"
+                            Height="35"
+                            HorizontalAlignment="Right"
+                            Appearance="Secondary"
+                            Content="Добавить" />
+                    </Grid>
+                </wpfui:Card>
+            </Grid>
         </Grid>
+
+
     </Grid>
 </Page>

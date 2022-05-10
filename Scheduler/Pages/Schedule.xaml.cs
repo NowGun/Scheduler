@@ -1,10 +1,8 @@
-﻿using ReactiveUI;
-using Scheduler.Classes;
+﻿using Scheduler.Classes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -24,70 +23,51 @@ namespace Scheduler.Pages
     /// </summary>
     public partial class Schedule : Page
     {
-        public static readonly DependencyProperty StartDateProperty =
-             DependencyProperty.Register(nameof(StartDate), typeof(DateTime), typeof(Schedule),
-                new PropertyMetadata(DateTime.Now));
-
-        public static readonly DependencyProperty SelectedDateProperty =
-             DependencyProperty.Register(nameof(SelectedDate), typeof(DateTime), typeof(Schedule),
-                new PropertyMetadata(DateTime.Now));
-
-        public static readonly DependencyProperty EndDateProperty =
-             DependencyProperty.Register(nameof(EndDate), typeof(DateTime), typeof(Schedule),
-                new PropertyMetadata(DateTime.Now));
-
-        public static readonly DependencyProperty UserTasksProperty =
-             DependencyProperty.Register(nameof(UserTasks), typeof(ObservableCollection<UserTask>), typeof(Schedule),
-                new PropertyMetadata(default));
-
         public Schedule()
         {
             InitializeComponent();
-
-            PreviousDay = ReactiveCommand.Create(PreviousDayImpl);
-            NextDay = ReactiveCommand.Create(NextDayImpl);
+            LoadSchedule();
         }
 
-        public ReactiveCommand<Unit, Unit> PreviousDay { get; }
-
-        public ReactiveCommand<Unit, Unit> NextDay { get; }
-
-        public DateTime StartDate
+        private bool isOpen = false;
+        private void LoadSchedule()
         {
-            get { return (DateTime)GetValue(StartDateProperty); }
-            set { SetValue(StartDateProperty, value); }
+            DatePickerDate.SelectedDate = DateTime.Now.Date;
+        }
+        private void ButtonDateNext_Click(object sender, RoutedEventArgs e)
+        {
+            DatePickerDate.SelectedDate = DatePickerDate.SelectedDate.Value.AddDays(1);
+        }
+        private void ButtonDatePrev_Click(object sender, RoutedEventArgs e)
+        {
+            DatePickerDate.SelectedDate = DatePickerDate.SelectedDate.Value.AddDays(-1);
         }
 
-        public DateTime SelectedDate
+        private void ButtonOpenInfo_Click(object sender, RoutedEventArgs e)
         {
-            get { return (DateTime)GetValue(SelectedDateProperty); }
-            set { SetValue(SelectedDateProperty, value); }
+            switch (isOpen)
+            {
+                case false:
+                    var anim = (Storyboard)FindResource("AnimOpenInfo");
+                    anim.Begin();
+                    isOpen = true;
+                    break;
+                case true:
+                    var anim2 = (Storyboard)FindResource("AnimCloseInfo");
+                    anim2.Begin();
+                    isOpen = false;
+                    break;
+            }
         }
+        private async void LoadListBoxCaseWork()
+        {
 
-        public DateTime EndDate
-        {
-            get { return (DateTime)GetValue(EndDateProperty); }
-            set { SetValue(EndDateProperty, value); }
         }
+    }
 
-        public ObservableCollection<UserTask> UserTasks
-        {
-            get { return (ObservableCollection<UserTask>)GetValue(UserTasksProperty); }
-            set { SetValue(UserTasksProperty, value); }
-        }
-
-        private void PreviousDayImpl()
-        {
-            StartDate = StartDate.Date.AddDays(-1);
-            SelectedDate = StartDate;
-            EndDate = StartDate.Date.AddDays(1).AddMilliseconds(-1);
-        }
-
-        private void NextDayImpl()
-        {
-            StartDate = StartDate.Date.AddDays(1);
-            SelectedDate = StartDate;
-            EndDate = StartDate.Date.AddDays(1).AddMilliseconds(-1);
-        }
+    public class CaseWork
+    {
+        public string? titleCase { get; set; }
+        public string? isBookMark { get; set; }
     }
 }

@@ -23,7 +23,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
-    <PackageReference Include="ReactiveUI" Version="18.0.10" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +47,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataBaseClass\" />
   </ItemGroup>
 
 </Project>
