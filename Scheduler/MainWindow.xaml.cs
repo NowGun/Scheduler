@@ -148,5 +148,20 @@ namespace Scheduler
         {
             secretCode = await SendMail(TextBoxMail.Text);
         }
+        public void MessageBoxNotify(string title, string message)
+        {
+            var messageBox = new WPFUI.Controls.MessageBox();
+
+            messageBox.ButtonLeftAppearance = Appearance.Transparent;
+            messageBox.ButtonLeftName = "";
+            messageBox.ButtonRightName = "Закрыть";
+            messageBox.ButtonRightClick += MessageBox_RightButtonClick;
+
+            messageBox.Show(title, message);
+        }
+        private void MessageBox_RightButtonClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            (sender as WPFUI.Controls.MessageBox)?.Close();
+        }
     }
 }
