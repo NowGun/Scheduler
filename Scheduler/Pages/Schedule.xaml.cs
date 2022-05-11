@@ -58,6 +58,12 @@ namespace Scheduler.Pages
                 case false:
                     var anim = (Storyboard)FindResource("AnimOpenInfo");
                     anim.Begin();
+                    TextBoxCaseDescription.Clear();
+                    TextBoxCaseTitle.Clear();
+                    TextBoxCaseTimeEnd.Clear();
+                    TextBoxCaseTimeStart.Clear();
+                    ButtonDone.Appearance = WPFUI.Common.Appearance.Secondary;
+                    ButtonBookMark.Appearance = WPFUI.Common.Appearance.Transparent;
                     isOpen = true;
                     break;
                 case true:
@@ -140,7 +146,7 @@ namespace Scheduler.Pages
                         CaseTitle = TextBoxCase.Text,
                         CaseBookmark = 0,
                         CaseDone = 0,
-                        CaseDate = DateOnly.FromDateTime(DateTime.Now),
+                        CaseDate = DateOnly.FromDateTime((DateTime)DatePickerDate.SelectedDate),
                     };
 
                     await db.Cases.AddAsync(c);
@@ -167,6 +173,8 @@ namespace Scheduler.Pages
         {
             if (ListBoxCaseWork.SelectedItem != null)
             {
+                ListBoxCaseDone.SelectedIndex = -1;
+
                 var anim = (Storyboard)FindResource("AnimOpenInfo");
                 anim.Begin();
                 isOpen = true;
@@ -209,57 +217,117 @@ namespace Scheduler.Pages
         {
             using schedulerContext db = new();
 
-            Case? caseInfo = await db.Cases.FirstOrDefaultAsync(c => c.Idcase == idCaseWork[ListBoxCaseWork.SelectedIndex]);
-
-            if (caseInfo != null)
+            if (ListBoxCaseDone.SelectedIndex == -1)
             {
-                if (ButtonBookMark.Appearance == WPFUI.Common.Appearance.Caution)
-                {
-                    ButtonBookMark.Appearance = WPFUI.Common.Appearance.Transparent;
-                    caseInfo.CaseBookmark = 0;
-                }
-                else
-                {
-                    ButtonBookMark.Appearance = WPFUI.Common.Appearance.Caution;
-                    caseInfo.CaseBookmark = 1;
-                }
+                Case? caseInfo = await db.Cases.FirstOrDefaultAsync(c => c.Idcase == idCaseWork[ListBoxCaseWork.SelectedIndex]);
 
-                await db.SaveChangesAsync();
+                if (caseInfo != null)
+                {
+                    if (ButtonBookMark.Appearance == WPFUI.Common.Appearance.Caution)
+                    {
+                        ButtonBookMark.Appearance = WPFUI.Common.Appearance.Transparent;
+                        caseInfo.CaseBookmark = 0;
+                    }
+                    else
+                    {
+                        ButtonBookMark.Appearance = WPFUI.Common.Appearance.Caution;
+                        caseInfo.CaseBookmark = 1;
+                    }
+
+                    await db.SaveChangesAsync();
+                }
             }
+            else
+            {
+                Case? caseInfo = await db.Cases.FirstOrDefaultAsync(c => c.Idcase == idCaseDone[ListBoxCaseDone.SelectedIndex]);
+
+                if (caseInfo != null)
+                {
+                    if (ButtonBookMark.Appearance == WPFUI.Common.Appearance.Caution)
+                    {
+                        ButtonBookMark.Appearance = WPFUI.Common.Appearance.Transparent;
+                        caseInfo.CaseBookmark = 0;
+                    }
+                    else
+                    {
+                        ButtonBookMark.Appearance = WPFUI.Common.Appearance.Caution;
+                        caseInfo.CaseBookmark = 1;
+                    }
+
+                    await db.SaveChangesAsync();
+                }
+            }
+            
         }
         private async void ButtonCaseSave_Click(object sender, RoutedEventArgs e)
         {
             if (!String.IsNullOrWhiteSpace(TextBoxCaseTitle.Text))
             {
-                if (ListBoxCaseWork.SelectedItem != null)
+                if (ListBoxCaseWork.SelectedItem != null || ListBoxCaseDone.SelectedItem != null)
                 {
                     using schedulerContext db = new();
 
-                    Case? c = await db.Cases.FirstOrDefaultAsync(c => c.Idcase == idCaseWork[ListBoxCaseWork.SelectedIndex]);
-
-                    if (c != null)
+                    if (ListBoxCaseDone.SelectedIndex == -1)
                     {
-                        c.CaseTitle = TextBoxCaseTitle.Text;
-                        c.CaseDescription = TextBoxCaseDescription.Text;
-                        c.CaseDate = DateOnly.FromDateTime((DateTime)DatePickerCaseDate.SelectedDate);
+                        Case? c = await db.Cases.FirstOrDefaultAsync(c => c.Idcase == idCaseWork[ListBoxCaseWork.SelectedIndex]);
 
-                        if (!String.IsNullOrWhiteSpace(TextBoxCaseTimeStart.Text))
+                        if (c != null)
                         {
-                            c.CaseTimestart = TimeOnly.FromDateTime(DateTime.Parse(TextBoxCaseTimeStart.Text));
+                            c.CaseTitle = TextBoxCaseTitle.Text;
+                            c.CaseDescription = TextBoxCaseDescription.Text;
+                            c.CaseDate = DateOnly.FromDateTime((DateTime)DatePickerCaseDate.SelectedDate);
+                            try
+                            {
+                                if (!String.IsNullOrWhiteSpace(TextBoxCaseTimeStart.Text))
+                                {
+                                    c.CaseTimestart = TimeOnly.FromDateTime(DateTime.Parse(TextBoxCaseTimeStart.Text));
+                                }
+
+                                if (!String.IsNullOrWhiteSpace(TextBoxCaseTimeEnd.Text))
+                                {
+                                    c.CaseTimeend = TimeOnly.FromDateTime(DateTime.Parse(TextBoxCaseTimeEnd.Text));
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                (Application.Current.MainWindow as MainWindow).Notify("Ошибка", "Время введено неверно");
+                            }
+                            
+                            await db.SaveChangesAsync();
+
+                            LoadListBoxCaseWork();
+                            LoadListBoxCaseDone();
                         }
-
-                        if (!String.IsNullOrWhiteSpace(TextBoxCaseTimeEnd.Text))
-                        {
-                            c.CaseTimeend = TimeOnly.FromDateTime(DateTime.Parse(TextBoxCaseTimeEnd.Text));
-                        }
-                        await db.SaveChangesAsync();
-
-                        var anim = (Storyboard)FindResource("AnimCloseInfo");
-                        anim.Begin();
-                        isOpen = false;
-
-                        LoadListBoxCaseWork();
                     }
+                    else
+                    {
+                        Case? c = await db.Cases.FirstOrDefaultAsync(c => c.Idcase == idCaseDone[ListBoxCaseDone.SelectedIndex]);
+
+                        if (c != null)
+                        {
+                            c.CaseTitle = TextBoxCaseTitle.Text;
+                            c.CaseDescription = TextBoxCaseDescription.Text;
+                            c.CaseDate = DateOnly.FromDateTime((DateTime)DatePickerCaseDate.SelectedDate);
+
+                            if (!String.IsNullOrWhiteSpace(TextBoxCaseTimeStart.Text))
+                            {
+                                c.CaseTimestart = TimeOnly.FromDateTime(DateTime.Parse(TextBoxCaseTimeStart.Text));
+                            }
+
+                            if (!String.IsNullOrWhiteSpace(TextBoxCaseTimeEnd.Text))
+                            {
+                                c.CaseTimeend = TimeOnly.FromDateTime(DateTime.Parse(TextBoxCaseTimeEnd.Text));
+                            }
+                            await db.SaveChangesAsync();
+
+                            LoadListBoxCaseWork();
+                            LoadListBoxCaseDone();
+                        }
+                    }
+
+                    var anim = (Storyboard)FindResource("AnimCloseInfo");
+                    anim.Begin();
+                    isOpen = false;
                 }
             }
             else (Application.Current.MainWindow as MainWindow).Notify("Уведомление", "Заполните заголовок");
@@ -267,23 +335,37 @@ namespace Scheduler.Pages
         private async void ButtonCaseDelete_Click(object sender, RoutedEventArgs e)
         {
             if (ListBoxCaseWork.Items.Count == 0) (Application.Current.MainWindow as MainWindow).Notify("Сообщение", "Произошла ошибка");
-            else if (ListBoxCaseWork.SelectedItem != null)
+            else if (ListBoxCaseWork.SelectedItem != null ||  ListBoxCaseDone.SelectedItem != null)
             {
                 using schedulerContext db = new();
 
-                Case? c = await db.Cases.FirstOrDefaultAsync(c => c.Idcase == idCaseWork[ListBoxCaseWork.SelectedIndex]);
-
-                if (c != null)
+                if (ListBoxCaseDone.SelectedIndex == -1)
                 {
-                    db.Cases.Remove(c);
-                    await db.SaveChangesAsync();
+                    Case? c = await db.Cases.FirstOrDefaultAsync(c => c.Idcase == idCaseWork[ListBoxCaseWork.SelectedIndex]);
 
-                    LoadListBoxCaseWork();
-
-                    var anim2 = (Storyboard)FindResource("AnimCloseInfo");
-                    anim2.Begin();
-                    isOpen = false;
+                    if (c != null)
+                    {
+                        db.Cases.Remove(c);
+                        await db.SaveChangesAsync();  
+                    }
                 }
+                else
+                {
+                    Case? c = await db.Cases.FirstOrDefaultAsync(c => c.Idcase == idCaseDone[ListBoxCaseDone.SelectedIndex]);
+
+                    if (c != null)
+                    {
+                        db.Cases.Remove(c);
+                        await db.SaveChangesAsync();
+                    }
+                }
+
+                LoadListBoxCaseWork();
+                LoadListBoxCaseDone();
+
+                var anim2 = (Storyboard)FindResource("AnimCloseInfo");
+                anim2.Begin();
+                isOpen = false;
             }
         }
         private void DatePickerDate_CalendarClosed(object sender, RoutedEventArgs e)
@@ -338,12 +420,17 @@ namespace Scheduler.Pages
                     LoadListBoxCaseWork();
                     LoadListBoxCaseDone();
                 }
-            }            
+            }
+
+            var anim = (Storyboard)FindResource("AnimCloseInfo");
+            anim.Begin();
         }
         private async void ListBoxCaseDone_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ListBoxCaseDone.SelectedItem != null)
             {
+                ListBoxCaseWork.SelectedIndex = -1;
+
                 var anim = (Storyboard)FindResource("AnimOpenInfo");
                 anim.Begin();
                 isOpen = true;
