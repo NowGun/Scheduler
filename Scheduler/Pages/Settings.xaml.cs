@@ -46,7 +46,7 @@ namespace Scheduler.Pages
 
             if (u != null)
             {
-                LabelLogin.Content = $"Добро пожаловать, {u.UsersLogin}";
+                LabelLogin.Content = $"Добро пожаловать, {u.UsersSurname} {u.UsersName}";
             }
         }
         private void ComboBoxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -9,17 +9,26 @@
     Title="Registration"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
     <Grid>
         <wpfui:TextBox
-            x:Name="TextBoxLogin"
-            Width="420"
+            x:Name="TextBoxName"
+            Width="200"
             Height="34"
-            Margin="0,-165,0,0"
+            Margin="-220,-164,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Placeholder="Логин" />
+            Placeholder="Имя" />
+        <wpfui:TextBox
+            x:Name="TextBoxSurname"
+            Width="200"
+            Height="34"
+            Margin="220,-164,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Placeholder="Фамилия" />
         <wpfui:PasswordBox
             x:Name="PasswordBoxPass"
             Width="200"
@@ -62,5 +71,34 @@
             Appearance="Secondary"
             Click="ButtonReg_Click"
             Content="Зарегистрироваться" />
+        <wpfui:Dialog
+            x:Name="RootDialogApplyMail"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Margin="0,-80,0,0"
+            d:IsHidden="True"
+            ButtonLeftClick="RootDialogApplyMail_ButtonLeftClick"
+            ButtonLeftName="Подтвердить код"
+            ButtonRightClick="RootDialogApplyMail_ButtonRightClick"
+            ButtonRightName="Закрыть"
+            DialogHeight="250"
+            IsShown="False">
+            <StackPanel>
+                <Grid x:Name="GridCode2" Visibility="Visible">
+                    <StackPanel>
+                        <Label Margin="0,0,0,10" Content="На указанную почту пришло для ее подтверждения" />
+                        <wpfui:TextBox x:Name="TextBoxCode1" Margin="0,0,0,10" />
+                        <wpfui:Button
+                            Width="200"
+                            Margin="0,0,0,10"
+                            HorizontalAlignment="Right"
+                            Appearance="Secondary"
+                            Click="Button_Click"
+                            Content="Отправить еще раз" />
+                    </StackPanel>
+                </Grid>
+                <Grid Height="100" />
+            </StackPanel>
+        </wpfui:Dialog>
     </Grid>
 </Page>

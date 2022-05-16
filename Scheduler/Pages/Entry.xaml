@@ -19,7 +19,7 @@
             Margin="0,-135,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Placeholder="Логин" />
+            Placeholder="Почта" />
         <wpfui:PasswordBox
             x:Name="PasswordBoxPass"
             Width="350"
@@ -28,11 +28,13 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Placeholder="Пароль" />
-        <CheckBox x:Name="CheckBoxSaveEntry"
+        <CheckBox
+            x:Name="CheckBoxSaveEntry"
             Margin="-175,40,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Content="Запомнить логин и пароль" Click="CheckBoxSaveEntry_Click" />
+            Click="CheckBoxSaveEntry_Click"
+            Content="Запомнить логин и пароль" />
         <wpfui:Button
             x:Name="ButtonReg"
             Width="165"
@@ -62,7 +64,8 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Appearance="Transparent"
+            Click="ButtonResetPass_Click"
             Content="Забыли пароль?"
-            Cursor="Hand" Click="ButtonResetPass_Click" />
+            Cursor="Hand" />
     </Grid>
 </Page>

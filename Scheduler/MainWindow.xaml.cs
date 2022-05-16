@@ -67,11 +67,11 @@ namespace Scheduler
             using schedulerContext db = new();
 
             switch (RootDialog.ButtonLeftName) {
-                case "Отправить код":
 
-                    if (!String.IsNullOrWhiteSpace(TextBoxLogin.Text.Trim()) && !String.IsNullOrWhiteSpace(TextBoxMail.Text.Trim()))
+                case "Отправить код":
+                    if (!String.IsNullOrWhiteSpace(TextBoxMail.Text.Trim()))
                     {
-                        var user = await db.Users.FirstOrDefaultAsync(u => u.UsersLogin == TextBoxLogin.Text.Trim() && u.UsersEmail == TextBoxMail.Text.Trim());
+                        var user = await db.Users.FirstOrDefaultAsync(u => u.UsersEmail == TextBoxMail.Text.Trim());
 
                         if (user != null)
                         {
@@ -82,6 +82,7 @@ namespace Scheduler
                     }
                     else Notify("Ошибка", "Заполните все поля");
                     break;
+
                 case "Проверить код":
                     if (TextBoxCode.Text == Convert.ToString(secretCode))
                     {
@@ -91,6 +92,7 @@ namespace Scheduler
                     }
                     else Notify("Ошибка", "Код неверный");
                     break;
+                    
                 case "Сменить пароль":
                     Classes.SettingProgram s = new();
 
@@ -144,10 +146,7 @@ namespace Scheduler
 
             return secretCode;
         }
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            secretCode = await SendMail(TextBoxMail.Text);
-        }
+        private async void Button_Click(object sender, RoutedEventArgs e) => secretCode = await SendMail(TextBoxMail.Text);
         public void MessageBoxNotify(string title, string message)
         {
             var messageBox = new WPFUI.Controls.MessageBox();

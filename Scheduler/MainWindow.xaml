@@ -78,29 +78,27 @@
             ButtonRightName="Закрыть"  
             DialogHeight="300"
             IsShown="False" d:IsHidden="True" ButtonRightClick="RootDialog_ButtonRightClick" ButtonLeftClick="RootDialog_ButtonLeftClick">
-            <Grid>
-                <StackPanel>
-                    <Grid x:Name="GridChangePasswordLogin">
-                        <StackPanel>
-                            <wpfui:TextBox x:Name="TextBoxLogin" Placeholder="Логин" Margin="0,0,0,10"/>
-                            <wpfui:TextBox x:Name="TextBoxMail" Placeholder="Почта" Margin="0,0,0,10"/>
-                        </StackPanel>
-                    </Grid>
-                    <Grid x:Name="GridCode" Visibility="Collapsed">
-                        <StackPanel>
-                            <Label Content="Введите 6-значный код" Margin="0,0,0,10"/>
-                            <wpfui:TextBox x:Name="TextBoxCode" Margin="0,0,0,10"/>
-                            <wpfui:Button Appearance="Secondary" Content="Отправить еще раз" Margin="0,0,0,10" Width="200" HorizontalAlignment="Right" Click="Button_Click"/>
-                        </StackPanel>
-                    </Grid>
-                    <Grid x:Name="GridNewPass" Visibility="Collapsed">
-                        <StackPanel>
-                            <wpfui:PasswordBox x:Name="PasswordBoxPass" Placeholder="Пароль"  Margin="0,0,0,10"/>
-                            <wpfui:PasswordBox x:Name="PasswordBoxRPass" Placeholder="Подтвердите пароль"/>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-            </Grid>
+            <StackPanel>
+                <Grid x:Name="GridChangePasswordLogin">
+                    <StackPanel>
+                        <wpfui:TextBox x:Name="TextBoxMail" Placeholder="Почта" Margin="0,0,0,10"/>
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="GridCode" Visibility="Collapsed">
+                    <StackPanel>
+                        <Label Content="Введите 6-значный код" Margin="0,0,0,10"/>
+                        <wpfui:TextBox x:Name="TextBoxCode" Margin="0,0,0,10"/>
+                        <wpfui:Button Appearance="Secondary" Content="Отправить еще раз" Margin="0,0,0,10" Width="200" HorizontalAlignment="Right" Click="Button_Click"/>
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="GridNewPass" Visibility="Collapsed">
+                    <StackPanel>
+                        <wpfui:PasswordBox x:Name="PasswordBoxPass" Placeholder="Пароль"  Margin="0,0,0,10"/>
+                        <wpfui:PasswordBox x:Name="PasswordBoxRPass" Placeholder="Подтвердите пароль"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Height="100"/>
+            </StackPanel>
         </wpfui:Dialog>
         <wpfui:Snackbar
                         x:Name="RootSnackbar"

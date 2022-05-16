@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+
+#nullable disable
 
 namespace Scheduler.DataBaseClass
 {
@@ -16,8 +17,8 @@ namespace Scheduler.DataBaseClass
         {
         }
 
-        public virtual DbSet<Case> Cases { get; set; } = null!;
-        public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<Case> Cases { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -30,8 +31,8 @@ namespace Scheduler.DataBaseClass
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
-                .HasCharSet("utf8mb4");
+            modelBuilder.HasCharSet("utf8mb4")
+                .UseCollation("utf8mb4_0900_ai_ci");
 
             modelBuilder.Entity<Case>(entity =>
             {
@@ -49,7 +50,9 @@ namespace Scheduler.DataBaseClass
 
                 entity.Property(e => e.CaseBookmark).HasColumnName("case_bookmark");
 
-                entity.Property(e => e.CaseDate).HasColumnName("case_date");
+                entity.Property(e => e.CaseDate)
+                    .HasColumnType("date")
+                    .HasColumnName("case_date");
 
                 entity.Property(e => e.CaseDescription)
                     .HasColumnType("text")
@@ -66,6 +69,7 @@ namespace Scheduler.DataBaseClass
                     .HasColumnName("case_timestart");
 
                 entity.Property(e => e.CaseTitle)
+                    .IsRequired()
                     .HasColumnType("text")
                     .HasColumnName("case_title");
 
@@ -91,20 +95,27 @@ namespace Scheduler.DataBaseClass
                 entity.Property(e => e.Idusers).HasColumnName("idusers");
 
                 entity.Property(e => e.UsersEmail)
+                    .IsRequired()
                     .HasColumnType("text")
                     .HasColumnName("users_email");
 
-                entity.Property(e => e.UsersLogin)
-                    .HasColumnType("text")
-                    .HasColumnName("users_login");
+                entity.Property(e => e.UsersName)
+                    .IsRequired()
+                    .HasMaxLength(45)
+                    .HasColumnName("users_name");
 
                 entity.Property(e => e.UsersPassword)
+                    .IsRequired()
                     .HasColumnType("text")
                     .HasColumnName("users_password");
 
                 entity.Property(e => e.UsersPhone)
                     .HasColumnType("text")
                     .HasColumnName("users_phone");
+
+                entity.Property(e => e.UsersSurname)
+                    .HasMaxLength(45)
+                    .HasColumnName("users_surname");
             });
 
             OnModelCreatingPartial(modelBuilder);

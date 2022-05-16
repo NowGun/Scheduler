@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,9 +26,10 @@ namespace Scheduler.Pages
         public Entry()
         {
             InitializeComponent();
-
             LoadData();
         }
+
+        private string cond = @"(\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)";
 
         private void LoadData()
         {
@@ -48,38 +50,42 @@ namespace Scheduler.Pages
 
             if (!String.IsNullOrWhiteSpace(TextBoxLogin.Text) && !String.IsNullOrWhiteSpace(PasswordBoxPass.Text))
             {
-                using schedulerContext db = new();
-
-                if (await db.Database.CanConnectAsync())
+                if (Regex.IsMatch(TextBoxLogin.Text, cond))
                 {
-                    User? user = await db.Users.FirstOrDefaultAsync(u => u.UsersLogin == TextBoxLogin.Text.Trim() && u.UsersPassword == s.Hash(PasswordBoxPass.Text.Trim()));
+                    using schedulerContext db = new();
 
-                    if (user != null)
+                    if (await db.Database.CanConnectAsync())
                     {
-                        if (CheckBoxSaveEntry.IsChecked == true)
+                        User? user = await db.Users.FirstOrDefaultAsync(u => u.UsersEmail == TextBoxLogin.Text.Trim() && u.UsersPassword == s.Hash(PasswordBoxPass.Text.Trim()));
+
+                        if (user != null)
                         {
-                            Properties.Settings.Default.Login = TextBoxLogin.Text.Trim();
-                            Properties.Settings.Default.Password = PasswordBoxPass.Text.Trim();
+                            if (CheckBoxSaveEntry.IsChecked == true)
+                            {
+                                Properties.Settings.Default.Login = TextBoxLogin.Text.Trim();
+                                Properties.Settings.Default.Password = PasswordBoxPass.Text.Trim();
+                            }
+                            else
+                            {
+                                Properties.Settings.Default.Login = "";
+                                Properties.Settings.Default.Password = "";
+                            }
+
+                            Properties.Settings.Default.IdUser = (int)user.Idusers;
+
+                            Properties.Settings.Default.Save();
+
+                            (Application.Current.MainWindow as MainWindow).isEntry = true;
+                            (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Collapsed;
+                            (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Visible;
+                            (Application.Current.MainWindow as MainWindow).NavigationItemBookMark.Visibility = Visibility.Visible;
+                            (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("планы");
                         }
-                        else
-                        {
-                            Properties.Settings.Default.Login = "";
-                            Properties.Settings.Default.Password = "";
-                        }
-
-                        Properties.Settings.Default.IdUser = (int)user.Idusers;
-
-                        Properties.Settings.Default.Save();
-
-                        (Application.Current.MainWindow as MainWindow).isEntry = true;
-                        (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Collapsed;
-                        (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Visible;
-                        (Application.Current.MainWindow as MainWindow).NavigationItemBookMark.Visibility = Visibility.Visible;
-                        (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("планы");
+                        else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "Логин или пароль не совпадают");
                     }
-                    else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "Логин или пароль не совпадают");
+                    else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "База данных недоступна");
                 }
-                else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "База данных недоступна");
+                else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "Почта введена неверно");
             }
             else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "Заполните поля");
 
