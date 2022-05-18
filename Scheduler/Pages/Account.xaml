@@ -1,0 +1,172 @@
+﻿<Page
+    x:Class="Scheduler.Pages.Account"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Scheduler.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wpfui="clr-namespace:WPFUI.Controls;assembly=WPFUI"
+    Title="Account"
+    d:DesignWidth="800"
+    Style="{DynamicResource UiPageScrollable}"
+    mc:Ignorable="d" Loaded="Page_Loaded">
+
+    <Grid>
+        <StackPanel
+            Margin="20,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <Label Content="Добро пожаловать, " FontSize="16" />
+            <Label
+                x:Name="LabelName"
+                Content="Жиров Даниил"
+                FontSize="16" />
+        </StackPanel>
+        <wpfui:Button
+            x:Name="ButtonExit"
+            Width="150"
+            Height="35"
+            Margin="0,14,20,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Appearance="Secondary"
+            Click="ButtonExit_Click"
+            Content="Выйти" />
+        <StackPanel Margin="0,60,0,0" VerticalAlignment="Top">
+            <wpfui:CardExpander
+                Margin="20,0,20,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                FontSize="16"
+                Header="Личная информация"
+                IsExpanded="True">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel
+                        Grid.ColumnSpan="1"
+                        Height="59"
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top">
+                        <Label Content="Фамилия" />
+                        <wpfui:TextBox x:Name="TextBoxName" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top">
+                        <Label Content="Имя" />
+                        <wpfui:TextBox x:Name="TextBoxSurname" />
+                    </StackPanel>
+
+
+                    <wpfui:Button
+                        x:Name="ButtonUpdateName"
+                        Grid.Column="1"
+                        Width="150"
+                        Height="35"
+                        Margin="0,70,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Appearance="Secondary"
+                        Click="ButtonUpdateName_Click"
+                        Content="Обновить" />
+                </Grid>
+            </wpfui:CardExpander>
+            <wpfui:CardExpander
+                Margin="20,20,20,0"
+                FontSize="16"
+                Header="Безопасность"
+                IsExpanded="True">
+                <StackPanel VerticalAlignment="Top">
+                    <wpfui:Card VerticalAlignment="Stretch">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel
+                                Grid.ColumnSpan="1"
+                                Margin="0,0,5,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top">
+                                <Label Content="Ваш текущий пароль" />
+                                <wpfui:PasswordBox x:Name="PasswordBoxOldPass" />
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                Margin="5,0,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top">
+                                <Label Content="Новый пароль" />
+                                <wpfui:PasswordBox x:Name="PasswordBoxNewPass" />
+                            </StackPanel>
+
+
+                            <wpfui:Button
+                                x:Name="ButtonUpdatePass"
+                                Grid.Column="1"
+                                Width="150"
+                                Height="35"
+                                Margin="0,70,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Appearance="Secondary"
+                                Content="Обновить пароль" Click="ButtonUpdatePass_Click" />
+                        </Grid>
+                    </wpfui:Card>
+                    <wpfui:Card Margin="0,20,0,0" VerticalAlignment="Stretch">
+                        <Grid>
+                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                <Label x:Name="LabelMail" Content="Текущая почта: " />
+                                <wpfui:TextBox
+                                    x:Name="TextBoxMail"
+                                    HorizontalAlignment="Stretch"
+                                    Placeholder="Введите новую почту" />
+                            </StackPanel>
+                            <wpfui:Button
+                                x:Name="ButtonUpdateMail"
+                                Width="200"
+                                Height="35"
+                                Margin="0,65,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Appearance="Secondary"
+                                Content="Обновить почтовый аккаунт" Click="ButtonUpdateMail_Click" />
+                        </Grid>
+                    </wpfui:Card>
+                    <wpfui:Card Margin="0,20,0,0" VerticalAlignment="Stretch">
+                        <Grid>
+                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                <Label x:Name="LabelPhone" Content="Текущий номер телефона: " />
+                                <wpfui:TextBox
+                                    x:Name="TextBoxPhone"
+                                    HorizontalAlignment="Stretch"
+                                    Placeholder="Введите новый телефон" />
+                            </StackPanel>
+                            <wpfui:Button
+                                x:Name="TextBoxUpdatePhone"
+                                Width="200"
+                                Height="35"
+                                Margin="0,65,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Appearance="Secondary"
+                                Content="Обновить номер телефона" Click="TextBoxUpdatePhone_Click" />
+                        </Grid>
+                    </wpfui:Card>
+                </StackPanel>
+            </wpfui:CardExpander>
+        </StackPanel>
+
+
+    </Grid>
+</Page>

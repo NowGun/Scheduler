@@ -9,7 +9,8 @@
     Title="Settings"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    mc:Ignorable="d" Loaded="Page_Loaded">
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
 
     <Grid>
         <Label
@@ -30,29 +31,24 @@
             <ComboBoxItem Content="Темная" />
             <ComboBoxItem Content="Светлая" />
         </ComboBox>
-        <Expander x:Name="ExpanderUser" Header="Настройки аккаунта" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="20,80,20,0" Padding="12,12,12,12" IsExpanded="True" FontSize="14">
-            <Grid>
-                <StackPanel>
-                    <Grid Margin="0,0,0,10">
-                        <Label x:Name="LabelLogin" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" FontSize="14"/>
-                        <wpfui:Button x:Name="ButtonExit" Appearance="Secondary" Content="Выйти" HorizontalAlignment="Right" Height="35" Width="150" Click="ButtonExit_Click"/>
-                    </Grid>
-                    
-                    <wpfui:Button x:Name="ButtonChangePassword" Appearance="Secondary" Content="Сменить пароль" HorizontalAlignment="Left" Width="150" Height="35" Click="ButtonChangePassword_Click"/>
-                </StackPanel>                
-            </Grid>            
-        </Expander>
         <Grid
             Margin="20,0,0,20"
             HorizontalAlignment="Left"
-            VerticalAlignment="Bottom">
+            VerticalAlignment="Bottom"
+            Cursor="Hand">
             <wpfui:Hyperlink
                 Content="Репозиторий на GitHub"
                 Cursor="Hand"
                 FontSize="14"
                 Icon="Link48"
                 NavigateUri="https://github.com/NowGun/Scheduler" />
-
+            <Label
+                Margin="200,0,0,0"
+                Padding="0,0,0,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Content="Версия 0.3"
+                FontSize="14" />
         </Grid>
     </Grid>
 </Page>

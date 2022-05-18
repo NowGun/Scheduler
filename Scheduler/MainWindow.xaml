@@ -37,7 +37,9 @@
                         Icon="LockOpen24"
                         Page="{x:Type pages:Entry}"
                         Tag="Entry" />
+                    <wpfui:NavigationItem x:Name="NavigationItemLC" Content="ЛК" Icon="PersonAccounts24" Page="{x:Type pages:Account}" Visibility="Collapsed" Cursor="Hand"/>
                     <wpfui:NavigationItem x:Name="NavigationItemShedule" Content="Планы" Icon="ChannelSubtract24" Page="{x:Type pages:Schedule}" Visibility="Collapsed"/>
+                    <wpfui:NavigationItem x:Name="NavigationItemGroups" Content="Группы" Icon="ChannelSubtract24" Page="{x:Type pages:Groups}" Visibility="Collapsed"/>
                     <wpfui:NavigationItem x:Name="NavigationItemBookMark" Content="Закладки" Icon="Bookmark24" Page="{x:Type pages:BookMark}" Visibility="Collapsed"/>
                     <wpfui:NavigationItem Content="Регистрация" Page="{x:Type pages:Registration}" Visibility="Collapsed"/>
                 </wpfui:NavigationStore.Items>

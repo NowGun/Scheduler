@@ -31,7 +31,6 @@ namespace Scheduler.Pages
         }
 
         private int? secretCode;
-        Classes.SettingProgram s = new();
 
         private async void ButtonReg_Click(object sender, RoutedEventArgs e)
         {
@@ -82,7 +81,7 @@ namespace Scheduler.Pages
                 {
                     UsersName = TextBoxName.Text,
                     UsersSurname = TextBoxSurname.Text,
-                    UsersPassword = s.Hash(PasswordBoxPass.Text.Trim()),
+                    UsersPassword = Classes.SettingProgram.Hash(PasswordBoxPass.Text.Trim()),
                     UsersEmail = TextBoxMail.Text.Trim(),
                     UsersPhone = TextBoxPhone.Text.Trim(),
                 };

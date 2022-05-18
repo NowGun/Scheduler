@@ -31,7 +31,7 @@ namespace Scheduler.Classes
            forceBackground: false);
             }
         }
-        public string Hash(string password)
+        public static string Hash(string password)
         {
             MD5 md5hasher = MD5.Create();
             return Convert.ToBase64String(md5hasher.ComputeHash(Encoding.Default.GetBytes(password)));

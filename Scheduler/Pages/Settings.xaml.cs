@@ -30,24 +30,6 @@ namespace Scheduler.Pages
         private void LoadSetting()
         {
             ComboBoxTheme.SelectedIndex = Properties.Settings.Default.Theme;
-
-            if (!(Application.Current.MainWindow as MainWindow).isEntry) ExpanderUser.Visibility = Visibility.Collapsed;
-            else if ((Application.Current.MainWindow as MainWindow).isEntry)
-            {
-                ExpanderUser.Visibility = Visibility.Visible;
-                LoadProfile();
-            }
-        }
-        private async void LoadProfile()
-        {
-            using schedulerContext db = new();
-
-            User? u = await db.Users.FirstOrDefaultAsync(u => u.Idusers == Properties.Settings.Default.IdUser);
-
-            if (u != null)
-            {
-                LabelLogin.Content = $"Добро пожаловать, {u.UsersSurname} {u.UsersName}";
-            }
         }
         private void ComboBoxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -60,25 +42,6 @@ namespace Scheduler.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LoadSetting();
-        }
-
-        private void ButtonExit_Click(object sender, RoutedEventArgs e)
-        {
-            (Application.Current.MainWindow as MainWindow).isEntry = false;
-            (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Visible;
-            (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Collapsed;
-            (Application.Current.MainWindow as MainWindow).NavigationItemBookMark.Visibility = Visibility.Collapsed;
-            (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("Entry");
-        }
-
-        private void ButtonChangePassword_Click(object sender, RoutedEventArgs e)
-        {
-            (Application.Current.MainWindow as MainWindow).isEntry = false;
-            (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Visible;
-            (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Collapsed;
-            (Application.Current.MainWindow as MainWindow).NavigationItemBookMark.Visibility = Visibility.Collapsed;
-            (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("Entry");
-            (Application.Current.MainWindow as MainWindow).RootDialog.Show();
         }
     }
 }

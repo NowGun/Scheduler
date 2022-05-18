@@ -469,6 +469,10 @@ namespace Scheduler.Pages
                 }
             }
         }
+        private void ButtonNowDate_Click(object sender, RoutedEventArgs e)
+        {
+            LoadSchedule();
+        }
     }
 
     public class CaseWork

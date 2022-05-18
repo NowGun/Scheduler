@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Scheduler.Classes;
 using Scheduler.DataBaseClass;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,6 @@ namespace Scheduler.Pages
         }
         private async void ButtonEntry_Click(object sender, RoutedEventArgs e)
         {
-            Classes.SettingProgram s = new();
             (Application.Current.MainWindow as MainWindow).ProgressRingLoad.Visibility = Visibility.Visible;
             ButtonEntry.IsEnabled = false;
             ButtonReg.IsEnabled = false;
@@ -56,7 +56,7 @@ namespace Scheduler.Pages
 
                     if (await db.Database.CanConnectAsync())
                     {
-                        User? user = await db.Users.FirstOrDefaultAsync(u => u.UsersEmail == TextBoxLogin.Text.Trim() && u.UsersPassword == s.Hash(PasswordBoxPass.Text.Trim()));
+                        User? user = await db.Users.FirstOrDefaultAsync(u => u.UsersEmail == TextBoxLogin.Text.Trim() && u.UsersPassword == SettingProgram.Hash(PasswordBoxPass.Text.Trim()));
 
                         if (user != null)
                         {
@@ -79,6 +79,8 @@ namespace Scheduler.Pages
                             (Application.Current.MainWindow as MainWindow).NavigationItemEntry.Visibility = Visibility.Collapsed;
                             (Application.Current.MainWindow as MainWindow).NavigationItemShedule.Visibility = Visibility.Visible;
                             (Application.Current.MainWindow as MainWindow).NavigationItemBookMark.Visibility = Visibility.Visible;
+                            (Application.Current.MainWindow as MainWindow).NavigationItemLC.Visibility = Visibility.Visible;
+                            (Application.Current.MainWindow as MainWindow).NavigationItemGroups.Visibility = Visibility.Visible;
                             (Application.Current.MainWindow as MainWindow)?.RootNavigation.Navigate("планы");
                         }
                         else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "Логин или пароль не совпадают");

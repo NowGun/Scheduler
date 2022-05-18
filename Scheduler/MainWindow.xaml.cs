@@ -94,7 +94,6 @@ namespace Scheduler
                     break;
                     
                 case "Сменить пароль":
-                    Classes.SettingProgram s = new();
 
                     if (!String.IsNullOrWhiteSpace(PasswordBoxPass.Text.Trim()) && !String.IsNullOrWhiteSpace(PasswordBoxRPass.Text.Trim()))
                     {
@@ -104,7 +103,7 @@ namespace Scheduler
 
                             if (user != null)
                             {
-                                user.UsersPassword = s.Hash(PasswordBoxPass.Text.Trim());
+                                user.UsersPassword = Classes.SettingProgram.Hash(PasswordBoxPass.Text.Trim());
                                 await db.SaveChangesAsync();
 
                                 Notify("Сообщение", "Пароль успешно изменен");
