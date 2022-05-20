@@ -8,8 +8,9 @@
     xmlns:wpfui="clr-namespace:WPFUI.Controls;assembly=WPFUI"
     Title="Account"
     d:DesignWidth="800"
+    Loaded="Page_Loaded"
     Style="{DynamicResource UiPageScrollable}"
-    mc:Ignorable="d" Loaded="Page_Loaded">
+    mc:Ignorable="d">
 
     <Grid>
         <StackPanel
@@ -54,7 +55,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top">
                         <Label Content="Фамилия" />
-                        <wpfui:TextBox x:Name="TextBoxName" />
+                        <wpfui:TextBox x:Name="TextBoxSurname" />
                     </StackPanel>
                     <StackPanel
                         Grid.Column="1"
@@ -63,7 +64,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top">
                         <Label Content="Имя" />
-                        <wpfui:TextBox x:Name="TextBoxSurname" />
+                        <wpfui:TextBox x:Name="TextBoxName" />
                     </StackPanel>
 
 
@@ -84,7 +85,7 @@
                 Margin="20,20,20,0"
                 FontSize="16"
                 Header="Безопасность"
-                IsExpanded="True">
+                IsExpanded="False">
                 <StackPanel VerticalAlignment="Top">
                     <wpfui:Card VerticalAlignment="Stretch">
                         <Grid>
@@ -120,7 +121,8 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Appearance="Secondary"
-                                Content="Обновить пароль" Click="ButtonUpdatePass_Click" />
+                                Click="ButtonUpdatePass_Click"
+                                Content="Обновить пароль" />
                         </Grid>
                     </wpfui:Card>
                     <wpfui:Card Margin="0,20,0,0" VerticalAlignment="Stretch">
@@ -140,7 +142,8 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Appearance="Secondary"
-                                Content="Обновить почтовый аккаунт" Click="ButtonUpdateMail_Click" />
+                                Click="ButtonUpdateMail_Click"
+                                Content="Обновить почтовый аккаунт" />
                         </Grid>
                     </wpfui:Card>
                     <wpfui:Card Margin="0,20,0,0" VerticalAlignment="Stretch">
@@ -160,7 +163,8 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Appearance="Secondary"
-                                Content="Обновить номер телефона" Click="TextBoxUpdatePhone_Click" />
+                                Click="TextBoxUpdatePhone_Click"
+                                Content="Обновить номер телефона" />
                         </Grid>
                     </wpfui:Card>
                 </StackPanel>

@@ -34,24 +34,23 @@ namespace Scheduler.Pages
             using schedulerContext db = new();
 
             var list = await db.Cases.Where(l => l.CaseBookmark == 1).ToListAsync();
-
-            foreach (var item in list)
+            
+            if (list != null)
             {
-                co.Add(new ListMark 
+                foreach (var item in list)
                 {
-                    header = item.CaseTitle,
-                    info = item.CaseDescription,
-                    date = item.CaseDate.ToString(),
-                    time = $"{item.CaseTimestart} - {item.CaseTimeend}"
-                });
-            }
-            ListBoxCaseMark.ItemsSource = co;
+                    co.Add(new ListMark
+                    {
+                        header = item.CaseTitle,
+                        info = item.CaseDescription,
+                        date = item.CaseDate.ToString(),
+                        time = $"{item.CaseTimestart} - {item.CaseTimeend}"
+                    });
+                }
+                ListBoxCaseMark.ItemsSource = co;
+            }            
         }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            LoadListBox();
-        }
+        private void Page_Loaded(object sender, RoutedEventArgs e) => LoadListBox();
     }
     partial class ListMark
     {

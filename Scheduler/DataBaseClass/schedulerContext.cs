@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
-#nullable disable
 
 namespace Scheduler.DataBaseClass
 {
@@ -17,8 +16,12 @@ namespace Scheduler.DataBaseClass
         {
         }
 
-        public virtual DbSet<Case> Cases { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Case> Cases { get; set; } = null!;
+        public virtual DbSet<Casegroup> Casegroups { get; set; } = null!;
+        public virtual DbSet<Category> Categories { get; set; } = null!;
+        public virtual DbSet<Group> Groups { get; set; } = null!;
+        public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<UserHasGroup> UsersHasGroups { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -82,6 +85,102 @@ namespace Scheduler.DataBaseClass
                     .HasConstraintName("fk_case_users");
             });
 
+            modelBuilder.Entity<Casegroup>(entity =>
+            {
+                entity.HasKey(e => e.Idcasegroup)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("casegroup");
+
+                entity.HasIndex(e => e.CategoryIdcategory, "fk_casegroup_category1_idx");
+
+                entity.HasIndex(e => e.GroupsIdgroups, "fk_casegroup_groups1_idx");
+
+                entity.HasIndex(e => e.Idcasegroup, "idcasegroup_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Idcasegroup).HasColumnName("idcasegroup");
+
+                entity.Property(e => e.CategoryIdcategory).HasColumnName("category_idcategory");
+
+                entity.Property(e => e.Date)
+                    .HasColumnType("date")
+                    .HasColumnName("date");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(45)
+                    .HasColumnName("description");
+
+                entity.Property(e => e.Done).HasColumnName("done");
+
+                entity.Property(e => e.GroupsIdgroups).HasColumnName("groups_idgroups");
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(45)
+                    .HasColumnName("title");
+
+                entity.HasOne(d => d.CategoryIdcategoryNavigation)
+                    .WithMany(p => p.Casegroups)
+                    .HasForeignKey(d => d.CategoryIdcategory)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_casegroup_category1");
+
+                entity.HasOne(d => d.GroupsIdgroupsNavigation)
+                    .WithMany(p => p.Casegroups)
+                    .HasForeignKey(d => d.GroupsIdgroups)
+                    .HasConstraintName("fk_casegroup_groups1");
+            });
+
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.HasKey(e => e.Idcategory)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("category");
+
+                entity.HasIndex(e => e.Idcategory, "idcategory_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Idcategory).HasColumnName("idcategory");
+
+                entity.Property(e => e.CategoryName)
+                    .IsRequired()
+                    .HasMaxLength(45)
+                    .HasColumnName("category_name");
+            });
+
+            modelBuilder.Entity<Group>(entity =>
+            {
+                entity.HasKey(e => e.Idgroups)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("groups");
+
+                entity.HasIndex(e => e.UsersCreate, "fk_groups_users1_idx");
+
+                entity.HasIndex(e => e.Idgroups, "idgroups_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Idgroups).HasColumnName("idgroups");
+
+                entity.Property(e => e.GroupsDescription)
+                    .HasMaxLength(45)
+                    .HasColumnName("groups_description");
+
+                entity.Property(e => e.GroupsName)
+                    .HasMaxLength(45)
+                    .HasColumnName("groups_name");
+
+                entity.Property(e => e.UsersCreate).HasColumnName("users_create");
+
+                entity.HasOne(d => d.UsersCreateNavigation)
+                    .WithMany(p => p.Groups)
+                    .HasForeignKey(d => d.UsersCreate)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_groups_users1");
+            });
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.Idusers)
@@ -100,7 +199,6 @@ namespace Scheduler.DataBaseClass
                     .HasColumnName("users_email");
 
                 entity.Property(e => e.UsersName)
-                    .IsRequired()
                     .HasMaxLength(45)
                     .HasColumnName("users_name");
 
@@ -114,8 +212,36 @@ namespace Scheduler.DataBaseClass
                     .HasColumnName("users_phone");
 
                 entity.Property(e => e.UsersSurname)
+                    .IsRequired()
                     .HasMaxLength(45)
                     .HasColumnName("users_surname");
+            });
+
+            modelBuilder.Entity<UserHasGroup>(entity =>
+            {
+                entity.HasKey(e => new { e.UsersIdusers, e.GroupsIdgroups })
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+                entity.ToTable("users_has_groups");
+
+                entity.HasIndex(e => e.GroupsIdgroups, "fk_users_has_groups_groups1_idx");
+
+                entity.HasIndex(e => e.UsersIdusers, "fk_users_has_groups_users1_idx");
+
+                entity.Property(e => e.UsersIdusers).HasColumnName("users_idusers");
+
+                entity.Property(e => e.GroupsIdgroups).HasColumnName("groups_idgroups");
+
+                entity.HasOne(d => d.GroupsIdgroupsNavigation)
+                    .WithMany(p => p.UserHasGroups)
+                    .HasForeignKey(d => d.GroupsIdgroups)
+                    .HasConstraintName("fk_users_has_groups_groups1");
+
+                entity.HasOne(d => d.UsersIdusersNavigation)
+                    .WithMany(p => p.UserHasGroups)
+                    .HasForeignKey(d => d.UsersIdusers)
+                    .HasConstraintName("fk_users_has_groups_users1");
             });
 
             OnModelCreatingPartial(modelBuilder);

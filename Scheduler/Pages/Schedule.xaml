@@ -307,16 +307,25 @@
                     Appearance="Secondary"
                     Click="ButtonDatePrev_Click"
                     Icon="ChevronLeft24" />
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <DatePicker
-                    x:Name="DatePickerDate"
-                    Width="250"
+                <StackPanel
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    CalendarClosed="DatePickerDate_CalendarClosed" Margin="0,0,10,0" />
-                    <wpfui:Button x:Name="ButtonNowDate" Icon="ArrowReset24" Appearance="Transparent" HorizontalAlignment="Center" Click="ButtonNowDate_Click"/>
+                    Orientation="Horizontal">
+                    <DatePicker
+                        x:Name="DatePickerDate"
+                        Width="250"
+                        Margin="0,0,10,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        CalendarClosed="DatePickerDate_CalendarClosed" />
+                    <wpfui:Button
+                        x:Name="ButtonNowDate"
+                        HorizontalAlignment="Center"
+                        Appearance="Transparent"
+                        Click="ButtonNowDate_Click"
+                        Icon="ArrowReset24" />
                 </StackPanel>
-                
+
                 <wpfui:Button
                     x:Name="ButtonDateNext"
                     HorizontalAlignment="Right"
