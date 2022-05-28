@@ -7,6 +7,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace Scheduler.Pages
 {
@@ -22,7 +24,23 @@ namespace Scheduler.Pages
 
         private bool isOpenUser = false;
         private bool isOpenMenu = false;
+        private bool isOpenInfo = false;
 
+        private void ThemeCheck()
+        {
+            int theme = Properties.Settings.Default.Theme;
+
+            if (theme == 0)
+            {
+                GridInfoGroup.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#393939");
+                GridGroupUser.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#393939");
+            }
+            else
+            {
+                GridInfoGroup.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FEFEFE");
+                GridGroupUser.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FEFEFE");
+            }
+        }
         private async void CheckBoxUser_Click(object sender, RoutedEventArgs e)
         {
             var cb = sender as System.Windows.Controls.CheckBox;
@@ -77,22 +95,25 @@ namespace Scheduler.Pages
                 foreach (var user in u)
                 {
                     var hs = await db.UsersHasGroups.Where(h => h.UsersIdusers == user.Idusers && h.GroupsIdgroupsNavigation.GroupsName == ((ListGroups)ListBoxGroups.SelectedItem).GroupName).FirstOrDefaultAsync();
-
-                    if (hs != null)
+                    var h = await db.Groups.Where(h => h.GroupsName == ((ListGroups)ListBoxGroups.SelectedItem).GroupName).FirstOrDefaultAsync();
+                    if (h.UsersCreate != user.Idusers)
                     {
-                        co1.Add(new ListUsers
+                        if (hs != null)
                         {
-                            nameUser = $"{user.UsersSurname} {user.UsersName}",
-                            checkUser = "True"
-                        });
-                    }
-                    else
-                    {
-                        co1.Add(new ListUsers
+                            co1.Add(new ListUsers
+                            {
+                                nameUser = $"{user.UsersSurname} {user.UsersName}",
+                                checkUser = "True"
+                            });
+                        }
+                        else
                         {
-                            nameUser = $"{user.UsersSurname} {user.UsersName}",
-                            checkUser = "False"
-                        });
+                            co1.Add(new ListUsers
+                            {
+                                nameUser = $"{user.UsersSurname} {user.UsersName}",
+                                checkUser = "False"
+                            });
+                        }
                     }
                 }
             }
@@ -103,22 +124,25 @@ namespace Scheduler.Pages
                 foreach (var user in u)
                 {
                     var hs = await db.UsersHasGroups.Where(h => h.UsersIdusers == user.Idusers && h.GroupsIdgroupsNavigation.GroupsName == ((ListGroups)ListBoxGroups.SelectedItem).GroupName).FirstOrDefaultAsync();
-
-                    if (hs != null)
+                    var h = await db.Groups.Where(h => h.GroupsName == ((ListGroups)ListBoxGroups.SelectedItem).GroupName).FirstOrDefaultAsync();
+                    if (h.UsersCreate != user.Idusers)
                     {
-                        co1.Add(new ListUsers
+                        if (hs != null)
                         {
-                            nameUser = $"{user.UsersSurname} {user.UsersName}",
-                            checkUser = "True"
-                        });
-                    }
-                    else
-                    {
-                        co1.Add(new ListUsers
+                            co1.Add(new ListUsers
+                            {
+                                nameUser = $"{user.UsersSurname} {user.UsersName}",
+                                checkUser = "True"
+                            });
+                        }
+                        else
                         {
-                            nameUser = $"{user.UsersSurname} {user.UsersName}",
-                            checkUser = "False"
-                        });
+                            co1.Add(new ListUsers
+                            {
+                                nameUser = $"{user.UsersSurname} {user.UsersName}",
+                                checkUser = "False"
+                            });
+                        }
                     }
                 }
             }
@@ -127,12 +151,14 @@ namespace Scheduler.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             FillListGroup();
+            ThemeCheck();
             ButtonOpenInfoGroup.Visibility = Visibility.Collapsed;
             ButtonOpenMenu.Visibility = Visibility.Collapsed;
             GridCases.Visibility = Visibility.Collapsed;
-            GridInfoCase.Visibility = Visibility.Collapsed;
             GridInfoGroup.Visibility = Visibility.Collapsed;
             GridGroupUser.Visibility = Visibility.Collapsed;
+            ((Storyboard)Resources["AnimCloseCaseInfo"]).Begin();
+            FillComboBoxCategory();
         }
         private void ButtonOpenInfoGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -204,7 +230,6 @@ namespace Scheduler.Pages
             using schedulerContext db = new();
 
             var hs = await db.UsersHasGroups.Include(h => h.GroupsIdgroupsNavigation).Where(h => h.UsersIdusers == Properties.Settings.Default.IdUser).ToListAsync();
-
 
             if (String.IsNullOrWhiteSpace(SearchBoxGroups.Text))
             {
@@ -309,7 +334,6 @@ namespace Scheduler.Pages
                 GridInfoGroup.Visibility = Visibility.Collapsed;
                 GridGroupUser.Visibility = Visibility.Collapsed;
                 FillListCases();
-                FillComboBoxCategory();
                 LabelNameGroup.Content = ((ListGroups)ListBoxGroups.SelectedItem).GroupName;
             }
             else
@@ -460,19 +484,34 @@ namespace Scheduler.Pages
                     FillListGroup();
                 }
             }
-            ButtonOpenInfoGroup.Visibility = Visibility.Collapsed;
+            GridInfoGroup.Visibility = Visibility.Collapsed;
         }
         private async void ComboBoxCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             using schedulerContext db = new();
 
-            Casegroup? cg = await db.Casegroups.Where(c => c.Title == ((ListCases)ListBoxCases.SelectedItem).checkContent).FirstOrDefaultAsync();
-
-            if (cg != null)
+            if (ListBoxDoneCases.SelectedIndex == -1)
             {
-                cg.CategoryIdcategory = (uint)ComboBoxCategory.SelectedIndex + 1;
-                await db.SaveChangesAsync();
+                Casegroup? cg = await db.Casegroups.Where(c => c.Title == ((ListCases)ListBoxCases.SelectedItem).checkContent).FirstOrDefaultAsync();
+
+                if (cg != null)
+                {
+                    cg.CategoryIdcategory = (uint)ComboBoxCategory.SelectedIndex + 1;
+                    await db.SaveChangesAsync();
+                }
             }
+            else
+            {
+                Casegroup? cg = await db.Casegroups.Where(c => c.Title == ((ListCasesDone)ListBoxDoneCases.SelectedItem).checkContent).FirstOrDefaultAsync();
+
+                if (cg != null)
+                {
+                    cg.CategoryIdcategory = (uint)ComboBoxCategory.SelectedIndex + 1;
+                    await db.SaveChangesAsync();
+                }
+            }
+
+            
         }
         private async void ButtonDeleteCase_Click(object sender, RoutedEventArgs e)
         {
@@ -499,9 +538,14 @@ namespace Scheduler.Pages
                 }
             }
 
+            ((Storyboard)Resources["AnimCloseCaseInfo"]).Begin();
+            isOpenInfo = false;
+
+            ListBoxCases.SelectedIndex = -1;
+            ListBoxDoneCases.SelectedIndex = -1;
+
             FillListCasesDone();
             FillListCases();
-            GridInfoCase.Visibility = Visibility.Collapsed;
         }
         private async void TextBoxCaseDescription_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -520,13 +564,27 @@ namespace Scheduler.Pages
         {
             if (ListBoxCases.SelectedIndex != -1)
             {
-                GridInfoCase.Visibility = Visibility.Visible;
+                ListBoxDoneCases.SelectedIndex = -1;
                 LoadInfoCase();
+                OpenCInfo(true);
             }
         }
         private void ButtonCloseInfoGroup_Click(object sender, RoutedEventArgs e)
         {
-            GridInfoCase.Visibility = Visibility.Collapsed;
+            ClearValue();
+            if (!isOpenInfo)
+            {
+                ((Storyboard)Resources["AnimOpenCaseInfo"]).Begin();
+                isOpenInfo = true;
+            }
+            else
+            {
+                ((Storyboard)Resources["AnimCloseCaseInfo"]).Begin();
+                isOpenInfo = false;
+
+                ListBoxCases.SelectedIndex = -1;
+                ListBoxDoneCases.SelectedIndex = -1;
+            }
         }
         private async void LoadInfoCase()
         {
@@ -582,6 +640,80 @@ namespace Scheduler.Pages
                     await db.SaveChangesAsync();
                 }
             }
+        }
+        private void ButtonRenameGroup_Click(object sender, RoutedEventArgs e)
+        {
+            TextBoxNewNameGroup.Text = ((ListGroups)ListBoxGroups.SelectedItem).GroupName;
+            RootDialogRenameGroup.Show();
+        }
+        private void RootDialogRenameGroup_ButtonRightClick(object sender, RoutedEventArgs e) => RootDialogRenameGroup.Hide();
+        private async void RootDialogRenameGroup_ButtonLeftClick(object sender, RoutedEventArgs e)
+        {
+            using schedulerContext db = new();
+            var isGroup = await db.Groups.Where(g => g.GroupsName == TextBoxNewNameGroup.Text).ToListAsync();
+
+            if (isGroup.Count == 0 || ((ListGroups)ListBoxGroups.SelectedItem).GroupName == TextBoxNewNameGroup.Text)
+            {
+                Group? g = await db.Groups.Where(g => g.GroupsName == ((ListGroups)ListBoxGroups.SelectedItem).GroupName).FirstOrDefaultAsync();
+
+                g.GroupsName = TextBoxNewNameGroup.Text;
+                await db.SaveChangesAsync();
+
+                TextBoxNameGroup.Clear();
+                SearchBoxGroups.Clear();
+                TextBoxNewNameGroup.Clear();
+
+                ((Storyboard)Resources["AnimCloseCaseInfo"]).Begin();
+                isOpenInfo = false;
+
+                ListBoxCases.SelectedIndex = -1;
+                ListBoxDoneCases.SelectedIndex = -1;
+
+                FillListGroup();
+
+                RootDialogRenameGroup.Hide();
+                GridInfoGroup.Visibility = Visibility.Collapsed;
+            }
+            else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "Такое название уже существует");
+        }
+        private void ClearValue()
+        {
+            CheckBoxNameCase.Content = "";
+            TextBoxCaseDescription.Clear();
+            LabelCaseInfo.Content = "";
+        }
+        private void ListBoxDoneCases_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListBoxDoneCases.SelectedIndex !=  -1)
+            {
+                ListBoxCases.SelectedIndex = -1;
+                LoadInfoCaseDone();
+                OpenCInfo(true);
+            }
+        }
+        private async void LoadInfoCaseDone()
+        {
+            CheckBoxNameCase.Content = ((ListCasesDone)ListBoxDoneCases.SelectedItem).checkContent;
+
+            using schedulerContext db = new();
+            var cases = await db.Casegroups.Where(c => c.Title == ((ListCasesDone)ListBoxDoneCases.SelectedItem).checkContent).Include(c => c.GroupsIdgroupsNavigation.UsersCreateNavigation).FirstOrDefaultAsync();
+
+            if (cases != null)
+            {
+                CheckBoxNameCase.IsChecked = cases.Done == 1 ? true : false;
+                TextBoxCaseDescription.Text = cases.Description;
+                ComboBoxCategory.SelectedIndex = (int)cases.CategoryIdcategory - 1;
+                LabelCaseInfo.Content = $"Создано {cases.Date}, {cases.GroupsIdgroupsNavigation.UsersCreateNavigation.UsersSurname} {cases.GroupsIdgroupsNavigation.UsersCreateNavigation.UsersName.First()}.";
+            }
+        }
+        private void OpenCInfo (bool a)
+        {
+            if (!isOpenInfo)
+            {
+                ((Storyboard)Resources["AnimOpenCaseInfo"]).Begin();
+                isOpenInfo = true;
+            }
+            
         }
     }
 

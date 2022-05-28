@@ -17,8 +17,7 @@
             x:Name="ListBoxCaseMark"
             Margin="20,0,20,20"
             Background="{x:Null}"
-            BorderBrush="{x:Null}"
-            Focusable="False">
+            BorderBrush="{x:Null}" SelectionChanged="ListBoxCaseMark_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

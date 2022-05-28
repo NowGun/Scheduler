@@ -12,13 +12,91 @@
     KeyUp="Page_KeyUp"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Storyboard x:Key="AnimCloseCaseInfo">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="GridCases" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                <EasingThicknessKeyFrame KeyTime="00:00:00" Value="220,0,250,10">
+                    <EasingThicknessKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingThicknessKeyFrame.EasingFunction>
+                </EasingThicknessKeyFrame>
+                <EasingThicknessKeyFrame KeyTime="00:00:00.3000000" Value="220,0,10,10">
+                    <EasingThicknessKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingThicknessKeyFrame.EasingFunction>
+                </EasingThicknessKeyFrame>
+            </ThicknessAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInfoCase" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.032">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInfoCase" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="121">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInfoCase" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="AnimOpenCaseInfo">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInfoCase" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.016">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.954">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInfoCase" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="123">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="5.812">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInfoCase" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="GridCases" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                <EasingThicknessKeyFrame KeyTime="00:00:00" Value="220,0,10,10" />
+                <EasingThicknessKeyFrame KeyTime="00:00:00.3000000" Value="220,0,250,10">
+                    <EasingThicknessKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut" />
+                    </EasingThicknessKeyFrame.EasingFunction>
+                </EasingThicknessKeyFrame>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+    </Page.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.35*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="250" />
-        </Grid.ColumnDefinitions>
         <wpfui:Button
             x:Name="ButtonOpenInfoGroup"
             Grid.ColumnSpan="3"
@@ -46,7 +124,19 @@
         <Grid
             x:Name="GridGroups"
             Grid.Column="0"
-            Margin="10,0,0,10">
+            Width="200"
+            Margin="10,0,0,10"
+            HorizontalAlignment="Left"
+            Opacity="1"
+            RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Grid.RenderTransform>
             <ListBox
                 x:Name="ListBoxGroups"
                 Padding="2,40,2,0"
@@ -108,7 +198,7 @@
         <Grid
             x:Name="GridCases"
             Grid.Column="1"
-            Margin="10,0,10,10">
+            Margin="220,10,10,10">
             <Label
                 x:Name="LabelNameGroup"
                 Margin="10,0,0,0"
@@ -116,55 +206,59 @@
                 VerticalAlignment="Top"
                 FontSize="25"
                 FontWeight="Bold" />
-            <StackPanel Margin="0,40,0,0">
-                <ListBox
-                    x:Name="ListBoxCases"
-                    Margin="0,0,0,10"
-                    Padding="2,2,2,2"
-                    Background="{x:Null}"
-                    BorderBrush="{x:Null}"
-                    SelectionChanged="ListBoxCases_SelectionChanged">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <wpfui:Card Margin="0,0,0,0" Padding="10,10,10,10">
-                                <CheckBox
-                                    x:Name="CheckBoxCases"
-                                    HorizontalAlignment="Left"
-                                    Click="CheckBoxCases_Click"
-                                    Content="{Binding checkContent}"
-                                    FontSize="14" />
-                            </wpfui:Card>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <Expander
-                    x:Name="ExpanderCasesDone"
-                    Margin="10,0,20,0"
-                    Padding="8,8,8,8"
-                    Expanded="ExpanderCasesDone_Expanded"
-                    FontSize="14"
-                    Header="Завершенные">
+            <wpfui:DynamicScrollViewer Margin="0,50,0,55">
+                <StackPanel>
                     <ListBox
-                        x:Name="ListBoxDoneCases"
-                        Padding="0,0,0,0"
+                        x:Name="ListBoxCases"
+                        Margin="10,0,10,10"
+                        Padding="2,2,2,2"
                         Background="{x:Null}"
-                        BorderBrush="{x:Null}">
+                        BorderBrush="{x:Null}"
+                        SelectionChanged="ListBoxCases_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <wpfui:Card Padding="10,10,10,10">
+                                <wpfui:Card Margin="0,0,0,0" Padding="10,10,10,10">
                                     <CheckBox
-                                        x:Name="CheckBoxCasesDone"
-                                        Margin="0,0,0,0"
-                                        Click="CheckBoxCasesDone_Click"
+                                        x:Name="CheckBoxCases"
+                                        HorizontalAlignment="Left"
+                                        Click="CheckBoxCases_Click"
                                         Content="{Binding checkContent}"
-                                        FontSize="14"
-                                        IsChecked="{Binding isCheck}" />
+                                        FontSize="14" />
                                 </wpfui:Card>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                </Expander>
-            </StackPanel>
+                    <Expander
+                        x:Name="ExpanderCasesDone"
+                        Margin="10,0,20,0"
+                        Padding="8,8,8,8"
+                        Expanded="ExpanderCasesDone_Expanded"
+                        FontSize="14"
+                        Header="Завершенные">
+                        <ListBox
+                            x:Name="ListBoxDoneCases"
+                            Padding="0,0,0,0"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            SelectionChanged="ListBoxDoneCases_SelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <wpfui:Card Padding="10,10,10,10">
+                                        <CheckBox
+                                            x:Name="CheckBoxCasesDone"
+                                            HorizontalAlignment="Left"
+                                            Click="CheckBoxCasesDone_Click"
+                                            Content="{Binding checkContent}"
+                                            FontSize="14"
+                                            IsChecked="{Binding isCheck}" />
+                                    </wpfui:Card>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+                </StackPanel>
+
+            </wpfui:DynamicScrollViewer>
 
             <wpfui:Card Padding="6,6,6,6" VerticalAlignment="Bottom">
                 <wpfui:TextBox
@@ -174,42 +268,67 @@
                     Placeholder="Добавить задачу" />
             </wpfui:Card>
         </Grid>
-        <Grid x:Name="GridInfoCase" Grid.Column="2" Margin="0,0,0,10">
-            <StackPanel Margin="10,0,10,10">
-                <CheckBox x:Name="CheckBoxNameCase"
-                    Margin="0,0,30,10"
-                    HorizontalAlignment="Left"
-                    Content="asdfasdfasdf"
-                    FontSize="14" Click="CheckBoxNameCase_Click" />
-                <wpfui:TextBox
-                    x:Name="TextBoxCaseDescription"
-                    Margin="0,0,0,10"
-                    AcceptsReturn="True"
-                    LostFocus="TextBoxCaseDescription_LostFocus"
-                    MinLines="3"
-                    TextWrapping="Wrap" KeyUp="TextBoxCaseDescription_KeyUp" />
-                <Label Content="Категория важности" />
-                <ComboBox x:Name="ComboBoxCategory" SelectionChanged="ComboBoxCategory_SelectionChanged" />
-            </StackPanel>
-            <wpfui:Button x:Name="ButtonCloseInfoGroup"
-                Margin="0,0,10,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Appearance="Transparent"
-                Icon="Dismiss24" Click="ButtonCloseInfoGroup_Click" />
-            <Label x:Name="LabelCaseInfo"
-                Margin="10,0,0,5"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                Content="Создано мной 27.05.2022" />
-            <wpfui:Button
-                x:Name="ButtonDeleteCase"
-                Margin="0,0,10,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Appearance="Danger"
-                Click="ButtonDeleteCase_Click"
-                Icon="Delete24" Width="30" Height="30" />
+        <Grid
+            x:Name="GridInfoCase"
+            Grid.Column="1"
+            Width="250"
+            Margin="0,0,10,10"
+            HorizontalAlignment="Right"
+            RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <wpfui:Card>
+                <Grid>
+                    <StackPanel>
+                        <CheckBox
+                            x:Name="CheckBoxNameCase"
+                            Margin="0,0,30,10"
+                            HorizontalAlignment="Left"
+                            Click="CheckBoxNameCase_Click"
+                            Content="asdfasdfasdf"
+                            FontSize="14" />
+                        <wpfui:TextBox
+                            x:Name="TextBoxCaseDescription"
+                            Margin="0,0,0,10"
+                            AcceptsReturn="True"
+                            KeyUp="TextBoxCaseDescription_KeyUp"
+                            LostFocus="TextBoxCaseDescription_LostFocus"
+                            MinLines="3"
+                            TextWrapping="Wrap" />
+                        <Label Content="Категория важности" />
+                        <ComboBox x:Name="ComboBoxCategory" SelectionChanged="ComboBoxCategory_SelectionChanged" />
+                    </StackPanel>
+                    <wpfui:Button
+                        x:Name="ButtonCloseInfoGroup"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Appearance="Transparent"
+                        Click="ButtonCloseInfoGroup_Click"
+                        Icon="Dismiss24" Margin="0,-5,0,0" />
+                    <Label
+                        x:Name="LabelCaseInfo"
+                        Margin="10,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Content="Создано мной 27.05.2022" />
+                    <wpfui:Button
+                        x:Name="ButtonDeleteCase"
+                        Width="30"
+                        Height="30"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Appearance="Danger"
+                        Click="ButtonDeleteCase_Click"
+                        Icon="Delete24" />
+
+                </Grid>
+            </wpfui:Card>
         </Grid>
         <Grid
             x:Name="GridGroupUser"
@@ -218,6 +337,7 @@
             Margin="0,-20,50,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
+            d:IsHidden="True"
             Visibility="Visible">
             <Expander Header="Участники" IsExpanded="True">
                 <StackPanel>
@@ -254,19 +374,15 @@
             Visibility="Visible">
             <StackPanel>
                 <wpfui:Button
+                    x:Name="ButtonRenameGroup"
                     Margin="0,0,0,10"
                     HorizontalAlignment="Stretch"
                     Appearance="Transparent"
                     BorderBrush="{x:Null}"
+                    Click="ButtonRenameGroup_Click"
                     Content="Переименовать список"
+                    Cursor="Hand"
                     Icon="Rename24" />
-                <wpfui:Button
-                    Margin="0,0,0,10"
-                    HorizontalAlignment="Stretch"
-                    Appearance="Transparent"
-                    BorderBrush="{x:Null}"
-                    Content="Печать списка"
-                    Icon="Print24" />
                 <wpfui:Button
                     x:Name="ButtonDeleteGroup"
                     Appearance="Transparent"
@@ -278,6 +394,27 @@
                     IconForeground="#FFFF5252" />
             </StackPanel>
         </wpfui:Card>
-
+        <wpfui:Dialog
+            x:Name="RootDialogRenameGroup"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Margin="0,-80,0,0"
+            d:IsHidden="True"
+            ButtonLeftClick="RootDialogRenameGroup_ButtonLeftClick"
+            ButtonLeftName="Переименовать"
+            ButtonRightClick="RootDialogRenameGroup_ButtonRightClick"
+            ButtonRightName="Закрыть"
+            DialogHeight="200"
+            IsShown="False">
+            <StackPanel>
+                <Grid x:Name="GridCode2" Visibility="Visible">
+                    <StackPanel>
+                        <Label Margin="0,0,0,10" Content="Введите новое название группы" />
+                        <wpfui:TextBox x:Name="TextBoxNewNameGroup" Margin="0,0,0,10" />
+                    </StackPanel>
+                </Grid>
+                <Grid Height="100" />
+            </StackPanel>
+        </wpfui:Dialog>
     </Grid>
 </Page>

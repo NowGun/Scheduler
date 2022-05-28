@@ -51,6 +51,11 @@ namespace Scheduler.Pages
             }            
         }
         private void Page_Loaded(object sender, RoutedEventArgs e) => LoadListBox();
+
+        private void ListBoxCaseMark_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListBoxCaseMark.SelectedIndex = -1;
+        }
     }
     partial class ListMark
     {

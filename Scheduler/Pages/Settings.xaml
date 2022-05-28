@@ -47,7 +47,7 @@
                 Padding="0,0,0,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                Content="Версия 0.3"
+                Content="Версия 1.0"
                 FontSize="14" />
         </Grid>
     </Grid>
