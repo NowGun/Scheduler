@@ -27,8 +27,7 @@ namespace Scheduler.Pages
     {
         public Schedule()
         {
-            InitializeComponent();
-            
+            InitializeComponent();            
         }
 
         private bool isOpen = false;
@@ -174,14 +173,10 @@ namespace Scheduler.Pages
             if (ListBoxCaseWork.SelectedItem != null)
             {
                 ListBoxCaseDone.SelectedIndex = -1;
-
-                var anim = (Storyboard)FindResource("AnimOpenInfo");
-                anim.Begin();
-                isOpen = true;
-
                 using schedulerContext db = new();
-
                 var caseCheck = await db.Cases.Where(c => c.Idcase == idCaseWork[ListBoxCaseWork.SelectedIndex]).FirstOrDefaultAsync();
+
+                OpenCInfo();
 
                 if (caseCheck != null)
                 {
@@ -431,13 +426,9 @@ namespace Scheduler.Pages
             {
                 ListBoxCaseWork.SelectedIndex = -1;
 
-                var anim = (Storyboard)FindResource("AnimOpenInfo");
-                anim.Begin();
-                isOpen = true;
-
                 using schedulerContext db = new();
-
                 var caseCheck = await db.Cases.Where(c => c.Idcase == idCaseDone[ListBoxCaseDone.SelectedIndex]).FirstOrDefaultAsync();
+                OpenCInfo();
 
                 if (caseCheck != null)
                 {
@@ -465,7 +456,6 @@ namespace Scheduler.Pages
                             ButtonDone.Appearance = WPFUI.Common.Appearance.Success;
                             break;
                     }
-
                 }
             }
         }
@@ -474,6 +464,20 @@ namespace Scheduler.Pages
             LoadSchedule();
             LoadListBoxCaseWork();
             LoadListBoxCaseDone();
+        }
+        private void OpenCInfo()
+        {
+            if (!isOpen)
+            {
+                ((Storyboard)Resources["AnimOpenInfo"]).Begin();
+                isOpen = true;
+            }
+        }
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            isOpen = false;
+            var anim2 = (Storyboard)FindResource("AnimCloseInfo");
+            anim2.Begin();
         }
     }
 

@@ -18,8 +18,8 @@
                 <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
             </Setter.Value>
         </Setter>
-        <Setter Property="Background" Value="{DynamicResource SystemAccentBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SystemAccentBrushListBox}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentBrushListBox}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">

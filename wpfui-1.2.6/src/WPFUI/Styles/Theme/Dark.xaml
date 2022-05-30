@@ -22,6 +22,9 @@
 
     <!--  Colors  -->
 
+    <Color x:Key="TextLabel">#FFFFFF</Color>
+    <Color x:Key="SystemAccentColorListBox">#0FFFFFFF</Color>
+
     <Color x:Key="TextFillColorPrimary">#FFFFFF</Color>
     <Color x:Key="TextFillColorSecondary">#C5FFFFFF</Color>
     <Color x:Key="TextFillColorTertiary">#87FFFFFF</Color>

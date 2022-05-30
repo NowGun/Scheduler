@@ -19,6 +19,11 @@
     <SolidColorBrush x:Key="SystemAccentColorLight3Brush" Color="{DynamicResource SystemAccentColorLight3}" />
 
     <!--  Brushes depending on system colors  -->
+
+    <SolidColorBrush x:Key="ListBoxItemColor" Color="{DynamicResource NSystemAccntListItem}" />
+
+
+    
     <SolidColorBrush x:Key="SystemAccentBrush" Color="{DynamicResource SystemAccentColorLight2}" />
     <SolidColorBrush x:Key="SystemFillColorAttentionBrush" Color="{DynamicResource SystemAccentColorLight2}" />
     <SolidColorBrush x:Key="AccentTextFillColorPrimaryBrush" Color="{DynamicResource SystemAccentColorLight3}" />
@@ -37,6 +42,12 @@
 
     <!--  Brushes  -->
 
+    <SolidColorBrush x:Key="TextFillColorTertiaryBrush2" Color="{DynamicResource TextLabel}" />
+    <SolidColorBrush x:Key="SystemAccentBrushListBox" Color="{DynamicResource SystemAccentColorListBox}" />
+
+
+
+    
     <SolidColorBrush x:Key="TextFillColorPrimaryBrush" Color="{DynamicResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="TextFillColorSecondaryBrush" Color="{DynamicResource TextFillColorSecondary}" />
     <SolidColorBrush x:Key="TextFillColorTertiaryBrush" Color="{DynamicResource TextFillColorTertiary}" />

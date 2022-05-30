@@ -20,6 +20,7 @@ namespace Scheduler.Pages
         public Groups()
         {
             InitializeComponent();
+            FillComboBoxCategory();
         }
 
         private bool isOpenUser = false;
@@ -158,7 +159,6 @@ namespace Scheduler.Pages
             GridInfoGroup.Visibility = Visibility.Collapsed;
             GridGroupUser.Visibility = Visibility.Collapsed;
             ((Storyboard)Resources["AnimCloseCaseInfo"]).Begin();
-            FillComboBoxCategory();
         }
         private void ButtonOpenInfoGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -226,56 +226,74 @@ namespace Scheduler.Pages
         private async void FillListGroup()
         {
             ObservableCollection<ListGroups> co1 = new();
-
             using schedulerContext db = new();
 
             var hs = await db.UsersHasGroups.Include(h => h.GroupsIdgroupsNavigation).Where(h => h.UsersIdusers == Properties.Settings.Default.IdUser).ToListAsync();
+            string theme;
+
+            if (Properties.Settings.Default.Theme == 0) theme = "#7F656363";
+            else theme = "#F8F8F8";
 
             if (String.IsNullOrWhiteSpace(SearchBoxGroups.Text))
             {
+                var g = await db.Groups
+                        .OrderBy(g => g.GroupsName)
+                        .Where(g => g.UsersCreate == Properties.Settings.Default.IdUser)
+                        .ToListAsync();
+
+                foreach (var group in g)
+                {
+                    var casesOpen = await db.Casegroups.Where(c => c.GroupsIdgroups == group.Idgroups).ToListAsync();
+
+                    co1.Add(new ListGroups
+                    {
+                        GroupName = group.GroupsName,
+                        GroupCases = casesOpen.Count.ToString()
+                    });
+                }
+
                 if (hs.Count != 0)
                 {
                     foreach (var h in hs)
                     {
-                        var g = await db.Groups
+                        var g2 = await db.Groups
                         .OrderBy(g => g.GroupsName)
-                        .Where(g => g.UsersCreate == Properties.Settings.Default.IdUser || g.Idgroups == h.GroupsIdgroups)
+                        .Where(g => g.Idgroups == h.GroupsIdgroups)
                         .ToListAsync();
 
-                        foreach (var group in g)
+                        foreach (var group in g2)
                         {
                             var casesOpen = await db.Casegroups.Where(c => c.GroupsIdgroups == group.Idgroups).ToListAsync();
 
                             co1.Add(new ListGroups
                             {
                                 GroupName = group.GroupsName,
-                                GroupCases = casesOpen.Count.ToString()
+                                GroupCases = casesOpen.Count.ToString(),
+                                ColorBorder = theme
                             });
                         }
                     }
-                }
-                else
-                {
-                    var g = await db.Groups
-                        .OrderBy(g => g.GroupsName)
-                        .Where(g => g.UsersCreate == Properties.Settings.Default.IdUser)
-                        .ToListAsync();
-
-                    foreach (var group in g)
-                    {
-                        var casesOpen = await db.Casegroups.Where(c => c.GroupsIdgroups == group.Idgroups).ToListAsync();
-
-                        co1.Add(new ListGroups
-                        {
-                            GroupName = group.GroupsName,
-                            GroupCases = casesOpen.Count.ToString()
-                        });
-                    }
-                }
-                
+                }                
             }
             else
             {
+                var g2 = await db.Groups
+                   .OrderBy(g => g.GroupsName)
+                   .Where(g => EF.Functions.Like(g.GroupsName, $"%{SearchBoxGroups.Text}%")
+                   && g.UsersCreate == Properties.Settings.Default.IdUser)
+                   .ToListAsync();
+
+                foreach (var group in g2)
+                {
+                    var casesOpen = await db.Casegroups.Where(c => c.GroupsIdgroups == group.Idgroups).ToListAsync();
+
+                    co1.Add(new ListGroups
+                    {
+                        GroupName = group.GroupsName,
+                        GroupCases = casesOpen.Count.ToString()
+                    });
+                }
+
                 if (hs.Count != 0)
                 {
                     foreach (var h in hs)
@@ -283,7 +301,7 @@ namespace Scheduler.Pages
                         var g = await db.Groups
                      .OrderBy(g => g.GroupsName)
                      .Where(g => EF.Functions.Like(g.GroupsName, $"%{SearchBoxGroups.Text}%")
-                     && g.UsersCreate == Properties.Settings.Default.IdUser || g.Idgroups == h.GroupsIdgroups)
+                     && g.Idgroups == h.GroupsIdgroups)
                      .ToListAsync();
 
                         foreach (var group in g)
@@ -298,25 +316,6 @@ namespace Scheduler.Pages
                         }
                     }
                 }
-                else
-                {
-                    var g = await db.Groups
-                   .OrderBy(g => g.GroupsName)
-                   .Where(g => EF.Functions.Like(g.GroupsName, $"%{SearchBoxGroups.Text}%")
-                   && g.UsersCreate == Properties.Settings.Default.IdUser)
-                   .ToListAsync();
-
-                    foreach (var group in g)
-                    {
-                        var casesOpen = await db.Casegroups.Where(c => c.GroupsIdgroups == group.Idgroups).ToListAsync();
-
-                        co1.Add(new ListGroups
-                        {
-                            GroupName = group.GroupsName,
-                            GroupCases = casesOpen.Count.ToString()
-                        });
-                    }
-                }
             }
 
 
@@ -328,6 +327,7 @@ namespace Scheduler.Pages
         {
             if (ListBoxGroups.SelectedIndex != -1)
             {
+                ExpanderCasesDone.IsExpanded = false;
                 ButtonOpenMenu.Visibility = Visibility.Visible;
                 ButtonOpenInfoGroup.Visibility = Visibility.Visible;
                 GridCases.Visibility = Visibility.Visible;
@@ -370,31 +370,37 @@ namespace Scheduler.Pages
         }
         private async void FillListCases()
         {
-            ObservableCollection<ListCases> co1 = new();
-
-            using schedulerContext db = new();
-
-            var d = await db.Casegroups.Where(d => d.Done == 1).ToListAsync();
-
-            if (d.Count == 0)
+            try
             {
-                ExpanderCasesDone.Visibility = Visibility.Collapsed;
-            }
-            else ExpanderCasesDone.Visibility = Visibility.Visible;
+                ObservableCollection<ListCases> co1 = new();
+                using schedulerContext db = new();
 
-            var c = await db.Casegroups.Where(c => c.GroupsIdgroupsNavigation.GroupsName == ((ListGroups)ListBoxGroups.SelectedItem).GroupName && c.Done == 0).ToListAsync();
+                var d = await db.Casegroups.Where(d => d.Done == 1).ToListAsync();
 
-            if (c != null)
-            {
-                foreach (var cases in c)
+                if (d.Count == 0)
                 {
-                    co1.Add(new ListCases
-                    {
-                        checkContent = cases.Title
-                    });
+                    ExpanderCasesDone.Visibility = Visibility.Collapsed;
                 }
-                ListBoxCases.ItemsSource = co1;
+                else ExpanderCasesDone.Visibility = Visibility.Visible;
+
+                var c = await db.Casegroups.Where(c => c.GroupsIdgroupsNavigation.GroupsName == ((ListGroups)ListBoxGroups.SelectedItem).GroupName && c.Done == 0).ToListAsync();
+
+                if (c != null)
+                {
+                    foreach (var cases in c)
+                    {
+                        co1.Add(new ListCases
+                        {
+                            checkContent = cases.Title
+                        });
+                    }
+                    ListBoxCases.ItemsSource = co1;
+                }
             }
+            catch
+            {
+
+            }            
         }
         private async void FillListCasesDone()
         {
@@ -510,8 +516,6 @@ namespace Scheduler.Pages
                     await db.SaveChangesAsync();
                 }
             }
-
-            
         }
         private async void ButtonDeleteCase_Click(object sender, RoutedEventArgs e)
         {
@@ -566,7 +570,7 @@ namespace Scheduler.Pages
             {
                 ListBoxDoneCases.SelectedIndex = -1;
                 LoadInfoCase();
-                OpenCInfo(true);
+                OpenCInfo();
             }
         }
         private void ButtonCloseInfoGroup_Click(object sender, RoutedEventArgs e)
@@ -688,7 +692,7 @@ namespace Scheduler.Pages
             {
                 ListBoxCases.SelectedIndex = -1;
                 LoadInfoCaseDone();
-                OpenCInfo(true);
+                OpenCInfo();
             }
         }
         private async void LoadInfoCaseDone()
@@ -706,7 +710,7 @@ namespace Scheduler.Pages
                 LabelCaseInfo.Content = $"Создано {cases.Date}, {cases.GroupsIdgroupsNavigation.UsersCreateNavigation.UsersSurname} {cases.GroupsIdgroupsNavigation.UsersCreateNavigation.UsersName.First()}.";
             }
         }
-        private void OpenCInfo (bool a)
+        private void OpenCInfo ()
         {
             if (!isOpenInfo)
             {
@@ -714,6 +718,12 @@ namespace Scheduler.Pages
                 isOpenInfo = true;
             }
             
+        }
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            isOpenUser = false;
+            isOpenMenu = false;
+            isOpenInfo = false;
         }
     }
 
@@ -735,5 +745,6 @@ namespace Scheduler.Pages
     {
         public string? GroupName { get; set; }
         public string? GroupCases { get; set; }
+        public string? ColorBorder { get; set; }
     }
 }

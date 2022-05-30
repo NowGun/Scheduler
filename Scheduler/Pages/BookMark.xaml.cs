@@ -30,11 +30,10 @@ namespace Scheduler.Pages
         private async void LoadListBox()
         {
             ObservableCollection<ListMark> co = new();
-
             using schedulerContext db = new();
 
-            var list = await db.Cases.Where(l => l.CaseBookmark == 1).ToListAsync();
-            
+            var list = await db.Cases.Where(l => l.CaseBookmark == 1 && l.UsersIdusers == Properties.Settings.Default.IdUser).ToListAsync();
+
             if (list != null)
             {
                 foreach (var item in list)
@@ -48,13 +47,47 @@ namespace Scheduler.Pages
                     });
                 }
                 ListBoxCaseMark.ItemsSource = co;
-            }            
+            }
         }
         private void Page_Loaded(object sender, RoutedEventArgs e) => LoadListBox();
-
-        private void ListBoxCaseMark_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void ButtonBookMark_Click(object sender, RoutedEventArgs e)
         {
-            ListBoxCaseMark.SelectedIndex = -1;
+            object clicked = (e.OriginalSource as FrameworkElement).DataContext;
+            var lbi = ListBoxCaseMark.ItemContainerGenerator.ContainerFromItem(clicked) as ListBoxItem;
+            lbi.IsSelected = true;
+
+            if (!String.IsNullOrWhiteSpace(((ListMark)ListBoxCaseMark.SelectedItem).header))
+            {
+                using schedulerContext db = new();
+                Case? c = await db.Cases.FirstOrDefaultAsync(c => c.CaseTitle == ((ListMark)ListBoxCaseMark.SelectedItem).header);
+
+                if (c != null)
+                {
+                    c.CaseBookmark = 0;
+                    await db.SaveChangesAsync();
+                    LoadListBox();
+                }
+            }
+
+        }
+        private async void ButtonDeleteCase_Click(object sender, RoutedEventArgs e)
+        {
+            object clicked = (e.OriginalSource as FrameworkElement).DataContext;
+            var lbi = ListBoxCaseMark.ItemContainerGenerator.ContainerFromItem(clicked) as ListBoxItem;
+            lbi.IsSelected = true;
+
+            if (!String.IsNullOrWhiteSpace(((ListMark)ListBoxCaseMark.SelectedItem).header))
+            {
+                using schedulerContext db = new();
+
+                Case? c = await db.Cases.FirstOrDefaultAsync(c => c.CaseTitle == ((ListMark)ListBoxCaseMark.SelectedItem).header);
+                if (c != null)
+                {
+                    db.Cases.Remove(c);
+                    await db.SaveChangesAsync();
+                    LoadListBox();
+                }
+            }
         }
     }
     partial class ListMark

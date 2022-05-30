@@ -52,6 +52,7 @@ namespace Scheduler.Pages
                             if (userExists.Count == 0)
                             {
                                 secretCode = await SendMail(TextBoxMail.Text.Trim());
+                                TextBoxCode1.Clear();
                                 RootDialogApplyMail.Show();
                             }
                             else (Application.Current.MainWindow as MainWindow)?.Notify("Ошибка", "Почта занята");

@@ -17,7 +17,7 @@
             x:Name="ListBoxCaseMark"
             Margin="20,0,20,20"
             Background="{x:Null}"
-            BorderBrush="{x:Null}" SelectionChanged="ListBoxCaseMark_SelectionChanged">
+            BorderBrush="{x:Null}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -41,6 +41,18 @@
                                 Appearance="Secondary"
                                 Content="{Binding time}"
                                 IsEnabled="False" />
+                            <wpfui:Button
+                                x:Name="ButtonBookMark"
+                                Margin="10,0,10,0"
+                                Appearance="Caution"
+                                Click="ButtonBookMark_Click"
+                                Icon="Bookmark24" />
+                            <wpfui:Button
+                                x:Name="ButtonDeleteCase"
+                                Margin="0,0,10,0"
+                                Appearance="Danger"
+                                Click="ButtonDeleteCase_Click"
+                                Icon="Delete24" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

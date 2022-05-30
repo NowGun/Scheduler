@@ -86,7 +86,7 @@
             <StackPanel>
                 <Grid x:Name="GridCode2" Visibility="Visible">
                     <StackPanel>
-                        <Label Margin="0,0,0,10" Content="На указанную почту пришло для ее подтверждения" />
+                        <Label Margin="0,0,0,10" Content="На указанную почту пришел код для ее подтверждения" />
                         <wpfui:TextBox x:Name="TextBoxCode1" Margin="0,0,0,10" />
                         <wpfui:Button
                             Width="200"
