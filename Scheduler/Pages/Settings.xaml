@@ -18,15 +18,15 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Тема"
-            FontSize="14" />
+            FontSize="18" />
         <ComboBox
             x:Name="ComboBoxTheme"
-            Width="200"
-            Height="35"
+            Width="250"
+            Height="40"
             Margin="80,14,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            FontSize="14"
+            FontSize="18"
             SelectionChanged="ComboBoxTheme_SelectionChanged">
             <ComboBoxItem Content="Темная" />
             <ComboBoxItem Content="Светлая" />
@@ -39,16 +39,16 @@
             <wpfui:Hyperlink
                 Content="Репозиторий на GitHub"
                 Cursor="Hand"
-                FontSize="14"
+                FontSize="16"
                 Icon="Link48"
                 NavigateUri="https://github.com/NowGun/Scheduler" />
             <Label
-                Margin="200,0,0,0"
+                Margin="225,0,0,0"
                 Padding="0,0,0,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Content="Версия 1.1"
-                FontSize="14" />
+                FontSize="16" />
         </Grid>
     </Grid>
 </Page>

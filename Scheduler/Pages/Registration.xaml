@@ -15,62 +15,69 @@
     <Grid>
         <wpfui:TextBox
             x:Name="TextBoxName"
-            Width="200"
-            Height="34"
-            Margin="-220,-164,0,0"
+            Width="250"
+            Height="40"
+            Margin="-260,-164,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            FontSize="18"
             Placeholder="Имя" />
         <wpfui:TextBox
             x:Name="TextBoxSurname"
-            Width="200"
-            Height="34"
-            Margin="220,-164,0,0"
+            Width="250"
+            Height="40"
+            Margin="260,-164,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            FontSize="18"
             Placeholder="Фамилия" />
         <wpfui:PasswordBox
             x:Name="PasswordBoxPass"
-            Width="200"
-            Height="33"
-            Margin="-220,-65,0,0"
+            Width="250"
+            Height="40"
+            Margin="-260,-65,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            FontSize="18"
             Placeholder="Пароль" />
         <wpfui:PasswordBox
             x:Name="PasswordBoxRPass"
-            Width="200"
-            Height="36"
-            Margin="220,-65,0,0"
+            Width="250"
+            Height="40"
+            Margin="260,-65,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            FontSize="18"
             Placeholder="Подтверждение пароля" />
         <wpfui:TextBox
             x:Name="TextBoxPhone"
-            Width="200"
-            Height="35"
-            Margin="220,35,0,0"
+            Width="250"
+            Height="40"
+            Margin="260,35,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            FontSize="18"
             Placeholder="Номер телефона" />
         <wpfui:TextBox
             x:Name="TextBoxMail"
-            Width="200"
-            Height="34"
-            Margin="-220,35,0,0"
+            Width="250"
+            Height="40"
+            Margin="-260,35,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            FontSize="18"
             Placeholder="Почта" />
         <wpfui:Button
             x:Name="ButtonReg"
-            Width="150"
-            Height="35"
-            Margin="270,135,0,0"
+            Width="200"
+            Height="40"
+            Margin="309,135,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Appearance="Secondary"
             Click="ButtonReg_Click"
-            Content="Зарегистрироваться" />
+            Content="Зарегистрироваться"
+            FontSize="18" />
         <wpfui:Dialog
             x:Name="RootDialogApplyMail"
             Grid.Row="0"

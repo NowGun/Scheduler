@@ -18,11 +18,11 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Orientation="Horizontal">
-            <Label Content="Добро пожаловать, " FontSize="16" />
+            <Label Content="Добро пожаловать, " FontSize="18" />
             <Label
                 x:Name="LabelName"
                 Content="Жиров Даниил"
-                FontSize="16" />
+                FontSize="18" />
         </StackPanel>
         <wpfui:Button
             x:Name="ButtonExit"
@@ -33,7 +33,8 @@
             VerticalAlignment="Top"
             Appearance="Secondary"
             Click="ButtonExit_Click"
-            Content="Выйти" />
+            Content="Выйти"
+            FontSize="18" />
         <StackPanel Margin="0,60,0,0" VerticalAlignment="Top">
             <wpfui:CardExpander
                 Margin="20,0,20,0"
@@ -50,12 +51,14 @@
 
                     <StackPanel
                         Grid.ColumnSpan="1"
-                        Height="59"
                         Margin="0,0,5,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top">
-                        <Label Content="Фамилия" />
-                        <wpfui:TextBox x:Name="TextBoxSurname" />
+                        <Label Content="Фамилия" FontSize="18" />
+                        <wpfui:TextBox
+                            x:Name="TextBoxSurname"
+                            Height="40"
+                            FontSize="18" />
                     </StackPanel>
                     <StackPanel
                         Grid.Column="1"
@@ -63,8 +66,11 @@
                         Margin="5,0,0,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top">
-                        <Label Content="Имя" />
-                        <wpfui:TextBox x:Name="TextBoxName" />
+                        <Label Content="Имя" FontSize="18" />
+                        <wpfui:TextBox
+                            x:Name="TextBoxName"
+                            Height="40"
+                            FontSize="18" />
                     </StackPanel>
 
 
@@ -72,13 +78,14 @@
                         x:Name="ButtonUpdateName"
                         Grid.Column="1"
                         Width="150"
-                        Height="35"
-                        Margin="0,70,0,0"
+                        Height="40"
+                        Margin="0,75,0,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Appearance="Secondary"
                         Click="ButtonUpdateName_Click"
-                        Content="Обновить" />
+                        Content="Обновить"
+                        FontSize="18" />
                 </Grid>
             </wpfui:CardExpander>
             <wpfui:CardExpander
@@ -98,8 +105,11 @@
                                 Margin="0,0,5,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top">
-                                <Label Content="Ваш текущий пароль" />
-                                <wpfui:PasswordBox x:Name="PasswordBoxOldPass" />
+                                <Label Content="Ваш текущий пароль" FontSize="18" />
+                                <wpfui:PasswordBox
+                                    x:Name="PasswordBoxOldPass"
+                                    Height="40"
+                                    FontSize="18" />
                             </StackPanel>
                             <StackPanel
                                 Grid.Column="1"
@@ -107,64 +117,80 @@
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top">
-                                <Label Content="Новый пароль" />
-                                <wpfui:PasswordBox x:Name="PasswordBoxNewPass" />
+                                <Label Content="Новый пароль" FontSize="18" />
+                                <wpfui:PasswordBox
+                                    x:Name="PasswordBoxNewPass"
+                                    Height="40"
+                                    FontSize="18" />
                             </StackPanel>
 
 
                             <wpfui:Button
                                 x:Name="ButtonUpdatePass"
                                 Grid.Column="1"
-                                Width="150"
-                                Height="35"
-                                Margin="0,70,0,0"
+                                Width="200"
+                                Height="40"
+                                Margin="0,75,0,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Appearance="Secondary"
                                 Click="ButtonUpdatePass_Click"
-                                Content="Обновить пароль" />
+                                Content="Обновить пароль"
+                                FontSize="18" />
                         </Grid>
                     </wpfui:Card>
                     <wpfui:Card Margin="0,20,0,0" VerticalAlignment="Stretch">
                         <Grid>
                             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                                <Label x:Name="LabelMail" Content="Текущая почта: " />
+                                <Label
+                                    x:Name="LabelMail"
+                                    Content="Текущая почта: "
+                                    FontSize="18" />
                                 <wpfui:TextBox
                                     x:Name="TextBoxMail"
+                                    Height="40"
                                     HorizontalAlignment="Stretch"
+                                    FontSize="18"
                                     Placeholder="Введите новую почту" />
                             </StackPanel>
                             <wpfui:Button
                                 x:Name="ButtonUpdateMail"
-                                Width="200"
-                                Height="35"
-                                Margin="0,65,0,0"
+                                Width="275"
+                                Height="40"
+                                Margin="0,75,0,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Appearance="Secondary"
                                 Click="ButtonUpdateMail_Click"
-                                Content="Обновить почтовый аккаунт" />
+                                Content="Обновить почтовый аккаунт"
+                                FontSize="18" />
                         </Grid>
                     </wpfui:Card>
                     <wpfui:Card Margin="0,20,0,0" VerticalAlignment="Stretch">
                         <Grid>
                             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                                <Label x:Name="LabelPhone" Content="Текущий номер телефона: " />
+                                <Label
+                                    x:Name="LabelPhone"
+                                    Content="Текущий номер телефона: "
+                                    FontSize="18" />
                                 <wpfui:TextBox
                                     x:Name="TextBoxPhone"
+                                    Height="40"
                                     HorizontalAlignment="Stretch"
+                                    FontSize="18"
                                     Placeholder="Введите новый телефон" />
                             </StackPanel>
                             <wpfui:Button
                                 x:Name="TextBoxUpdatePhone"
-                                Width="200"
-                                Height="35"
-                                Margin="0,65,0,0"
+                                Width="275"
+                                Height="40"
+                                Margin="0,75,0,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Bottom"
                                 Appearance="Secondary"
                                 Click="TextBoxUpdatePhone_Click"
-                                Content="Обновить номер телефона" />
+                                Content="Обновить номер телефона"
+                                FontSize="18" />
                         </Grid>
                     </wpfui:Card>
                 </StackPanel>

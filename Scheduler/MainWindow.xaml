@@ -112,7 +112,7 @@
                         ShowCloseButton="True"
                         Timeout="5000" Margin="100,0,25,25" />
         <wpfui:TitleBar
-            Title="Планировщик"
+            Title="ToDo Corp"
             Height="51"
             VerticalAlignment="Top"
             Icon="/Images/3176366.png"

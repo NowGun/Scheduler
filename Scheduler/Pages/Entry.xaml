@@ -12,53 +12,54 @@
     mc:Ignorable="d">
 
     <Grid>
+        <Label Content="Copyright © 2022 ООО «Европа». Все права защищены" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" FontSize="14"/>
         <wpfui:TextBox
             x:Name="TextBoxLogin"
-            Width="350"
-            Height="34"
-            Margin="0,-135,0,0"
+            Width="400"
+            Height="40"
+            Margin="0,-145,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Placeholder="Почта" />
+            Placeholder="Почта" FontSize="18" />
         <wpfui:PasswordBox
             x:Name="PasswordBoxPass"
-            Width="350"
-            Height="35"
-            Margin="0,-35,0,0"
+            Width="400"
+            Height="40"
+            Margin="0,-40,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Placeholder="Пароль" />
+            Placeholder="Пароль" FontSize="18" />
         <CheckBox
             x:Name="CheckBoxSaveEntry"
             Margin="-175,40,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Click="CheckBoxSaveEntry_Click"
-            Content="Запомнить логин и пароль" />
+            Content="Запомнить логин и пароль" FontSize="16" />
         <wpfui:Button
             x:Name="ButtonReg"
-            Width="165"
+            Width="200"
             Height="35"
-            Margin="-185,115,0,0"
+            Margin="-200,115,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Appearance="Secondary"
             Click="ButtonReg_Click"
             Content="Зарегистрироваться"
-            Cursor="Hand" />
+            Cursor="Hand" FontSize="16" />
         <wpfui:Button
             x:Name="ButtonEntry"
-            Width="150"
+            Width="175"
             Height="35"
-            Margin="200,115,0,0"
+            Margin="226,115,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Appearance="Primary"
             Click="ButtonEntry_Click"
-            Content="Войти" />
+            Content="Войти" FontSize="16" />
         <wpfui:Button
             x:Name="ButtonResetPass"
-            Width="350"
+            Width="400"
             Height="35"
             Margin="0,205,0,0"
             HorizontalAlignment="Center"
@@ -66,6 +67,6 @@
             Appearance="Transparent"
             Click="ButtonResetPass_Click"
             Content="Забыли пароль?"
-            Cursor="Hand" />
+            Cursor="Hand" FontSize="16" />
     </Grid>
 </Page>

@@ -13,7 +13,7 @@ namespace Scheduler.DataBaseClass
         }
 
         public uint Idgroups { get; set; }
-        public uint UsersCreate { get; set; }
+        public uint? UsersCreate { get; set; }
         public string? GroupsName { get; set; }
         public string? GroupsDescription { get; set; }
 

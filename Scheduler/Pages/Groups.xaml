@@ -11,16 +11,17 @@
     d:DesignWidth="800"
     KeyUp="Page_KeyUp"
     Loaded="Page_Loaded"
-    mc:Ignorable="d" Unloaded="Page_Unloaded">
+    Unloaded="Page_Unloaded"
+    mc:Ignorable="d">
     <Page.Resources>
         <Storyboard x:Key="AnimCloseCaseInfo">
             <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="GridCases" Storyboard.TargetProperty="(FrameworkElement.Margin)">
-                <EasingThicknessKeyFrame KeyTime="00:00:00" Value="220,0,320,10">
+                <EasingThicknessKeyFrame KeyTime="00:00:00" Value="270,0,320,10">
                     <EasingThicknessKeyFrame.EasingFunction>
                         <CircleEase EasingMode="EaseOut" />
                     </EasingThicknessKeyFrame.EasingFunction>
                 </EasingThicknessKeyFrame>
-                <EasingThicknessKeyFrame KeyTime="00:00:00.3000000" Value="220,0,10,10">
+                <EasingThicknessKeyFrame KeyTime="00:00:00.3000000" Value="270,0,10,10">
                     <EasingThicknessKeyFrame.EasingFunction>
                         <CircleEase EasingMode="EaseOut" />
                     </EasingThicknessKeyFrame.EasingFunction>
@@ -48,7 +49,7 @@
                 </EasingDoubleKeyFrame>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInfoCase" Storyboard.TargetProperty="(FrameworkElement.Width)">
-                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="300"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="300" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="AnimOpenCaseInfo">
@@ -89,15 +90,15 @@
                 </EasingDoubleKeyFrame>
             </DoubleAnimationUsingKeyFrames>
             <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="GridCases" Storyboard.TargetProperty="(FrameworkElement.Margin)">
-                <EasingThicknessKeyFrame KeyTime="00:00:00" Value="220,0,10,10" />
-                <EasingThicknessKeyFrame KeyTime="00:00:00.3000000" Value="220,0,311,10">
+                <EasingThicknessKeyFrame KeyTime="00:00:00" Value="270,0,10,10" />
+                <EasingThicknessKeyFrame KeyTime="00:00:00.3000000" Value="270,0,311,10">
                     <EasingThicknessKeyFrame.EasingFunction>
                         <CircleEase EasingMode="EaseOut" />
                     </EasingThicknessKeyFrame.EasingFunction>
                 </EasingThicknessKeyFrame>
             </ThicknessAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GridInfoCase" Storyboard.TargetProperty="(FrameworkElement.Width)">
-                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="300"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="300" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Page.Resources>
@@ -125,12 +126,13 @@
             VerticalAlignment="Top"
             Appearance="Transparent"
             Click="ButtonOpenMenu_Click"
+            Cursor="Hand"
             Icon="MoreHorizontal24"
-            Visibility="Visible" Cursor="Hand" />
+            Visibility="Visible" />
         <Grid
             x:Name="GridGroups"
             Grid.Column="0"
-            Width="200"
+            Width="250"
             Margin="10,0,0,10"
             HorizontalAlignment="Left"
             Opacity="1"
@@ -145,8 +147,8 @@
             </Grid.RenderTransform>
             <ListBox
                 x:Name="ListBoxGroups"
-                Padding="2,40,2,0"
-                FontSize="14"
+                Padding="2,50,2,0"
+                FontSize="18"
                 SelectionChanged="ListBoxGroups_SelectionChanged"
                 VirtualizingPanel.ScrollUnit="Pixel">
                 <ListBox.ItemTemplate>
@@ -156,7 +158,8 @@
                                 Margin="0,0,25,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Content="{Binding GroupName}" />
+                                Content="{Binding GroupName}"
+                                FontSize="18" />
                             <Border
                                 Width="25"
                                 Height="25"
@@ -170,7 +173,8 @@
                                     Height="20"
                                     HorizontalContentAlignment="Center"
                                     VerticalContentAlignment="Center"
-                                    Content="{Binding GroupCases}" />
+                                    Content="{Binding GroupCases}"
+                                    FontSize="14" />
                             </Border>
                         </Grid>
                     </DataTemplate>
@@ -178,8 +182,10 @@
             </ListBox>
             <wpfui:SearchBox
                 x:Name="SearchBoxGroups"
+                Height="40"
                 Margin="5,5,5,0"
                 VerticalAlignment="Top"
+                FontSize="18"
                 MouseLeftButtonUp="SearchBoxGroups_MouseLeftButtonUp"
                 Placeholder="Поиск группы"
                 PreviewKeyUp="SearchBoxGroups_PreviewKeyUp" />
@@ -189,6 +195,7 @@
                         x:Name="TextBoxNameGroup"
                         Height="35"
                         Margin="0,0,40,0"
+                        FontSize="16"
                         Placeholder="Название группы" />
                     <wpfui:Button
                         x:Name="ButtonAddGroup"
@@ -204,7 +211,7 @@
         <Grid
             x:Name="GridCases"
             Grid.Column="1"
-            Margin="220,10,10,10">
+            Margin="270,10,10,10">
             <Label
                 x:Name="LabelNameGroup"
                 Margin="10,0,0,0"
@@ -229,7 +236,7 @@
                                         HorizontalAlignment="Left"
                                         Click="CheckBoxCases_Click"
                                         Content="{Binding checkContent}"
-                                        FontSize="14" />
+                                        FontSize="18" />
                                 </wpfui:Card>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -239,7 +246,7 @@
                         Margin="10,0,20,0"
                         Padding="8,8,8,8"
                         Expanded="ExpanderCasesDone_Expanded"
-                        FontSize="14"
+                        FontSize="18"
                         Header="Завершенные">
                         <ListBox
                             x:Name="ListBoxDoneCases"
@@ -255,7 +262,7 @@
                                             HorizontalAlignment="Left"
                                             Click="CheckBoxCasesDone_Click"
                                             Content="{Binding checkContent}"
-                                            FontSize="14"
+                                            FontSize="18"
                                             IsChecked="{Binding isCheck}" />
                                     </wpfui:Card>
                                 </DataTemplate>
@@ -269,6 +276,7 @@
             <wpfui:Card Padding="6,6,6,6" VerticalAlignment="Bottom">
                 <wpfui:TextBox
                     x:Name="TextBoxNameCase"
+                    FontSize="16"
                     Icon="Add24"
                     KeyUp="TextBoxNameCase_KeyUp"
                     Placeholder="Добавить задачу" />
@@ -277,7 +285,7 @@
         <Grid
             x:Name="GridInfoCase"
             Grid.Column="1"
-            Width="250"
+            Width="300"
             Margin="0,0,10,10"
             HorizontalAlignment="Right"
             RenderTransformOrigin="0.5,0.5">
@@ -298,31 +306,38 @@
                             HorizontalAlignment="Left"
                             Click="CheckBoxNameCase_Click"
                             Content="asdfasdfasdf"
-                            FontSize="14" />
+                            FontSize="16" />
                         <wpfui:TextBox
                             x:Name="TextBoxCaseDescription"
                             Margin="0,0,0,10"
                             AcceptsReturn="True"
+                            FontSize="16"
                             KeyUp="TextBoxCaseDescription_KeyUp"
                             LostFocus="TextBoxCaseDescription_LostFocus"
                             MinLines="3"
                             TextWrapping="Wrap" />
-                        <Label Content="Категория важности" />
-                        <ComboBox x:Name="ComboBoxCategory" SelectionChanged="ComboBoxCategory_SelectionChanged" />
+                        <Label Content="Категория важности" FontSize="16" />
+                        <ComboBox
+                            x:Name="ComboBoxCategory"
+                            Height="40"
+                            FontSize="16"
+                            SelectionChanged="ComboBoxCategory_SelectionChanged" />
                     </StackPanel>
                     <wpfui:Button
                         x:Name="ButtonCloseInfoGroup"
+                        Margin="0,-5,0,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Appearance="Transparent"
                         Click="ButtonCloseInfoGroup_Click"
-                        Icon="Dismiss24" Margin="0,-5,0,0" />
+                        Icon="Dismiss24" />
                     <Label
                         x:Name="LabelCaseInfo"
                         Margin="10,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
-                        Content="Создано мной 27.05.2022" />
+                        Content="Создано мной 27.05.2022"
+                        FontSize="14" />
                     <wpfui:Button
                         x:Name="ButtonDeleteCase"
                         Width="30"
